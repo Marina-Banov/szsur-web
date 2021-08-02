@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { connect } from "react-redux";
 import { LinearProgress } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import { Button, Card, CardBody, Table } from "reactstrap";
@@ -6,12 +7,12 @@ import { Link } from "react-router-dom";
 
 import constants from "appConstants";
 import { useFirebase } from "appFirebase";
+import { actions, selectors } from "store";
 
-export default function Surveys() {
+function Surveys({ surveys, setSurveys }) {
   const { t } = useTranslation();
   const firebase = useFirebase();
   const [loading, setLoading] = useState();
-  const [surveys, setSurveys] = useState([]);
 
   const getSurveys = useCallback(() => {
     firebase
@@ -22,15 +23,17 @@ export default function Surveys() {
       })
       .catch((err) => {
         console.error(err);
+        setSurveys([]);
         setLoading(false);
       });
-  }, [firebase]);
+  }, [firebase, setSurveys]);
 
   useEffect(() => {
-    setLoading(true);
-    getSurveys();
-    // resetState();
-  }, [getSurveys]);
+    if (!surveys) {
+      setLoading(true);
+      getSurveys();
+    }
+  }, [surveys, getSurveys]);
 
   function deleteSurvey(id) {
     setLoading(true);
@@ -112,3 +115,13 @@ export default function Surveys() {
     </Card>
   );
 }
+
+const mapStateToProps = (state) => ({
+  surveys: selectors.getSurveys(state),
+});
+
+const mapDispatchToProps = {
+  ...actions
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Surveys);

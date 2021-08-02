@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { connect } from "react-redux";
 import { LinearProgress } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import { Button, Card, CardBody, Table } from "reactstrap";
@@ -6,12 +7,12 @@ import { Link } from "react-router-dom";
 
 import constants from "appConstants";
 import { useFirebase } from "appFirebase";
+import { actions, selectors } from "store";
 
-export default function Events() {
+function Events({ events, setEvents }) {
   const { t } = useTranslation();
   const firebase = useFirebase();
   const [loading, setLoading] = useState();
-  const [events, setEvents] = useState([]);
 
   const getEvents = useCallback(() => {
     firebase
@@ -22,14 +23,17 @@ export default function Events() {
       })
       .catch((err) => {
         console.error(err);
+        setEvents([]);
         setLoading(false);
       });
-  }, [firebase]);
+  }, [firebase, setEvents]);
 
   useEffect(() => {
-    setLoading(true);
-    getEvents();
-  }, [getEvents]);
+    if (!events) {
+      setLoading(true);
+      getEvents();
+    }
+  }, [events, getEvents]);
 
   function displayDate(e) {
     return new Date(e.startTime._seconds * 1000).toLocaleString("hr", {
@@ -103,3 +107,13 @@ export default function Events() {
     </Card>
   );
 }
+
+const mapStateToProps = (state) => ({
+  events: selectors.getEvents(state),
+});
+
+const mapDispatchToProps = {
+  ...actions
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Events);
