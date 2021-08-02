@@ -2,7 +2,7 @@ import React from "react";
 
 import navigation from "./navigation";
 import { PageAlertContext } from "components/common";
-import Logo from "assets/images/vibe-logo.svg";
+import Logo from "assets/sztfr-logo.svg";
 import NavSingleItem from "./NavSingleItem";
 import NavDropdownItem from "./NavDropdownItem";
 
