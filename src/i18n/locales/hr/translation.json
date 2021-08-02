@@ -1,0 +1,65 @@
+{
+  "login": {
+    "login": "Prijava",
+    "login_with_email": "Prijava s e-mail adresom",
+    "login_with_google": "Prijava s Google računom",
+    "email": "E-mail",
+    "email_sent": "Na tvoju adresu smo poslali e-mail s uputama. Provjeri poštanski sandučić.",
+    "email_for_confirmation": "Molimo upiši svoju e-mail adresu",
+    "invalid_verification_link": "Nešto nije u redu s poveznicom. Možeš ponovno zatražiti verifikacijski e-mail."
+  },
+  "cancel": "Odustani",
+  "error_occurred": "Došlo je do pogreške",
+  "try_again": "Pokušaj ponovno",
+  "title": "Naslov",
+  "description": "Opis",
+  "tags": {
+    "tags": "Tagovi",
+    "add_new_tag": "Dodaj novi tag"
+  },
+  "images": {
+    "image": "Slika",
+    "add_image": "Dodaj sliku"
+  },
+  "events": {
+    "event": "događaj",
+    "no_events": "Nema događaja.",
+    "new_event": "Novi događaj",
+    "add_new_event": "Dodaj novi događaj",
+    "start_date": "Datum početka",
+    "end_date": "Datum završetka",
+    "start_time": "Vrijeme početka",
+    "end_time": "Vrijeme završetka",
+    "online_address": "URL događaja",
+    "onsite_address": "Adresa",
+    "organisation": "Organizator"
+  },
+  "surveys": {
+    "no_surveys": "Nema anketa.",
+    "new_survey": "Nova anketa",
+    "number_of_answers": "Broj odgovora",
+    "published": "Objavljeno",
+    "google_form_url": "URL Google ankete",
+    "add_new_survey": "Dodaj novu anketu",
+    "question_number": "Pitanje {{number}}",
+    "new_question": "Novo pitanje",
+    "delete_question": "Obriši pitanje",
+    "question_title": "Tekst pitanja",
+    "question_type": "Vrsta pitanja",
+    "input_text": "Tekst",
+    "single_choice": "Jednostruki izbor",
+    "multiple_choice": "Višestruki izbor",
+    "new_choice": "Novi izbor",
+    "choice_number": "Izbor {{number}}"
+  },
+  "validation": {
+    "required": "Molimo ispunite obavezna polja"
+  },
+  "add": "Dodaj",
+  "edit": "Uredi",
+  "publish": "Objavi",
+  "delete": "Obriši",
+  "sztfr": "Studentski zbor Tehničkog fakulteta",
+  "home_p1": "Ovo je mjesto za upravljanje sadržajem na mobilnoj aplikaciji SZTFR. Rezervirano za članove SZ-a.",
+  "home_p2": "Dodaj, uredi ili obriši događaje koje organizira Studentski zbor ili postavi i obradi ankete svim studentima Tehničkog fakulteta."
+}
