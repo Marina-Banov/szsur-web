@@ -17,21 +17,42 @@ export const EventFormFields = {
 };
 
 export default class EventForm {
-  constructor() {
-    this.title = "";
-    this.description = "";
-    this.image = "";
-    this.tags = [];
-    this.endDate = "";
-    this.endTime = "";
-    this.location = {
-      online: null,
-      valueOnline: "",
-      valueOnsite: "",
-    };
-    this.organisation = "";
-    this.startDate = "";
-    this.startTime = "";
+  constructor(event = {}) {
+    if (event.id) {
+      event.location = {
+        online: event.online,
+        valueOnline: event.online ? event.location : "",
+        valueOnsite: event.online ? "" : event.location,
+      };
+
+      const startDate = new Date(event.startTime._seconds * 1000);
+      const endDate = new Date(event.endTime._seconds * 1000);
+
+      event.startDate = startDate.toISOString();
+      event.startTime = startDate.toISOString();
+      event.endDate = endDate.toISOString();
+      event.endTime = endDate.toISOString();
+
+      delete event.online;
+      delete event.subscribers;
+    }
+
+    Object.assign(this, {
+      title: "",
+      description: "",
+      image: "",
+      tags: [],
+      endDate: "",
+      endTime: "",
+      location: {
+        online: null,
+        valueOnline: "",
+        valueOnsite: "",
+      },
+      organisation: "",
+      startDate: "",
+      startTime: "",
+    }, event);
   }
 }
 

@@ -24,7 +24,7 @@ export default function ImageCard({ errors, setFormField, FormFields, form }) {
           onChange={(e) => setFormField(FormFields.image, e.target.files[0])}
         />
         <br />
-        {form.image && <img src={URL.createObjectURL(form.image)} alt="" />}
+        {/*form.image && <img src={URL.createObjectURL(form.image)} alt="" />*/}
       </CardBody>
     </Card>
   );

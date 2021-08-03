@@ -5,7 +5,7 @@ import { TimePicker as BootstrapTimePicker } from "react-tempusdominus-bootstrap
 import "./index.scss";
 import "tempusdominus-bootstrap/src/sass/tempusdominus-bootstrap-build.scss";
 
-export default function TimePicker({ onChange, order, label, invalid }) {
+export default function TimePicker({ onChange, order, label, invalid, date }) {
   return (
     <>
       <Label for={`react-js-utl-ellViKYMFK-${order * 3 + 1}`}>{label}</Label>
@@ -15,6 +15,7 @@ export default function TimePicker({ onChange, order, label, invalid }) {
         noIcon={true}
         onChange={onChange}
         className={invalid ? "is-invalid" : ""}
+        date={date}
       />
     </>
   );
