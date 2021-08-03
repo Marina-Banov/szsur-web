@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { connect } from "react-redux";
 import { CircularProgress } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import {
@@ -13,31 +14,36 @@ import {
 
 import constants from "appConstants";
 import { useFirebase } from "appFirebase";
+import { actions, selectors } from "store";
 
-export default function TagsCard({ errors, setFormField, FormFields, form }) {
+function TagsCard({ tags, setTags, errors, setFormField, FormFields, form }) {
   const { t } = useTranslation();
   const firebase = useFirebase();
-  const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const getTags = useCallback(() => {
     firebase
       .firestoreRead(constants.FIRESTORE_TAGS_PATH)
       .then((res) => {
-        setLoading(false);
         setTags(res.body.values);
+        setLoading(false);
       })
       .catch((err) => {
-        setLoading(false);
         console.error(err);
+        setTags([]);
+        setLoading(false);
       });
-  }, [firebase]);
+  }, [firebase, setTags]);
 
   useEffect(() => {
-    setLoading(true);
-    getTags();
-  }, [getTags]);
+    if (!tags) {
+      setLoading(true);
+      getTags();
+    } else {
+      setLoading(false);
+    }
+  }, [getTags, tags]);
 
   function handleTagClick(tag) {
     const t = [...form.tags];
@@ -65,6 +71,7 @@ export default function TagsCard({ errors, setFormField, FormFields, form }) {
       })
       .catch((err) => {
         setLoading(false);
+        setTags([]);
         console.error(err);
       });
   }
@@ -111,3 +118,13 @@ export default function TagsCard({ errors, setFormField, FormFields, form }) {
     </Card>
   );
 }
+
+const mapStateToProps = (state) => ({
+  tags: selectors.getTags(state),
+});
+
+const mapDispatchToProps = {
+  ...actions
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TagsCard);

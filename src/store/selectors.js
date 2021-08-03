@@ -1,5 +1,10 @@
 import { createSelector } from 'reselect';
 
+const getTags = createSelector(
+    (state) => state.tags,
+    (tags) => tags
+);
+
 const getEvents = createSelector(
     (state) => state.events,
     (events) => events
@@ -11,6 +16,7 @@ const getSurveys = createSelector(
 );
 
 export default {
+    getTags,
     getEvents,
     getSurveys
 };
