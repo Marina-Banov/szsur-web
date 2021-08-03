@@ -1,6 +1,7 @@
 import {
   Dashboard,
   EditEvent,
+  EditSurvey,
   Events,
   NewEvent,
   NewSurvey,
@@ -48,6 +49,11 @@ const mainRoutes = [
     name: "Uredi događaj",
     path: "/events/:id",
     component: EditEvent,
+  },
+  {
+    name: "Uredi anketu",
+    path: "/surveys/:id",
+    component: EditSurvey,
   }
 ];
 

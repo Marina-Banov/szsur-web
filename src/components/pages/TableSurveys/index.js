@@ -84,9 +84,11 @@ function Surveys({ surveys, setSurveys }) {
                   <td>
                     {
                     s.published ?
-                      <Button className="mr-2 mb-1 py-1">
-                        {t("edit")}
-                      </Button>
+                      <Link to={{ pathname: `surveys/${s.id}`, survey: s }}>
+                        <Button className="mr-2 mb-1 py-1">
+                          {t("edit")}
+                        </Button>
+                      </Link>
                     :
                       <Button className="mr-2 mb-1 py-1">
                         {t("publish")}
