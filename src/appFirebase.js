@@ -34,7 +34,7 @@ export default class Firebase {
       }
     });
     this.firestore = app.firestore();
-    this.storage = app.storage();
+    this.storage = app.storage().ref();
   }
 
   sendLoginLink = (email) => {
@@ -72,8 +72,12 @@ export default class Firebase {
   };
 
   uploadFile = (filepath, file) => {
-    return this.storage.ref().child(filepath).put(file);
+    return this.storage.child(filepath).put(file);
   };
+
+  getImage = (filepath) => {
+    return this.storage.child(filepath).getDownloadURL()
+  }
 
   firestoreCreate = (collectionName, payload) => {
     return this.firestore
@@ -91,7 +95,9 @@ export default class Firebase {
   };
 
   firestoreRead = (path) => {
-    return request.get(buildURL(process.env.REACT_APP_API_PATH, path));
+    return request
+        .get(buildURL(process.env.REACT_APP_API_PATH, path))
+        .set("Authorization", "Bearer " + this.userToken);
   };
 
   firestoreUpdate = (path, body) => {

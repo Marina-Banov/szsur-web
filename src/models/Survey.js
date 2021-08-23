@@ -8,6 +8,7 @@ export default class Survey {
     this.tags = form.tags;
     this.published = false;
     this.subscribers = [];
+    this.answersCount = 0;
   }
 }
 

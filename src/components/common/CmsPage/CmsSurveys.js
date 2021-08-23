@@ -72,18 +72,20 @@ export default function CmsSurveys({
           />
         ))}
 
-        <FormGroup>
-          <Divider className="mb-3" />
-          <Button
-            block
-            color="success"
-            onClick={addQuestion}
-            disabled={form.questions.length === constants.SURVEY_MAX_QUESTIONS}
-          >
-            <i className="fa fa-plus" />
-            &nbsp; {t("surveys.new_question")}
-          </Button>
-        </FormGroup>
+        {!form.published &&
+          <FormGroup>
+            <Divider className="mb-3" />
+            <Button
+              block
+              color="success"
+              onClick={addQuestion}
+              disabled={form.questions.length === constants.SURVEY_MAX_QUESTIONS}
+            >
+              <i className="fa fa-plus" />
+              &nbsp; {t("surveys.new_question")}
+            </Button>
+          </FormGroup>
+        }
       </CardBody>
     </Card>
   );

@@ -11,6 +11,13 @@ const constants = {
   SURVEY_QUESTION_TYPE_TEXT: "input-text",
   SURVEY_QUESTION_TYPE_SINGLE: "single-choice",
   SURVEY_QUESTION_TYPE_MULTIPLE: "multiple-choice",
+
+  actions: {
+    SET_TAGS: "SET_TAGS",
+    SET_EVENTS: "SET_EVENTS",
+    SET_SURVEYS: "SET_SURVEYS",
+    SET_SURVEY_IMAGE: "SET_SURVEY_IMAGE",
+  },
 };
 
 export default constants;
