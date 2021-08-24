@@ -5,8 +5,9 @@ import "firebase/firestore";
 import "firebase/storage";
 import request from "superagent";
 
-import constants from "appConstants";
+import { common } from "./constants";
 import { buildURL } from "utils/buildURL";
+import api from "./api";
 
 export const FirebaseContext = createContext({});
 export const useFirebase = () => useContext(FirebaseContext);
@@ -26,9 +27,10 @@ export default class Firebase {
     this.auth = app.auth();
     this.auth.onAuthStateChanged(() => {
       if (!!this.auth.currentUser) {
-        this.auth.currentUser
-          .getIdToken(false)
-          .then((token) => (this.userToken = token));
+        this.auth.currentUser.getIdToken(false).then((token) => {
+          api.setToken(token);
+          this.userToken = token;
+        });
       } else {
         this.userToken = "";
       }
@@ -46,14 +48,14 @@ export default class Firebase {
 
   verifyEmailLink = () => {
     const email = window.localStorage.getItem(
-      constants.LOCAL_STORAGE_LOG_IN_EMAIL
+      common.LOCAL_STORAGE_LOG_IN_EMAIL
     );
     return this.auth.isSignInWithEmailLink(window.location.href) && !!email;
   };
 
   logInWithEmailLink = () => {
     const email = window.localStorage.getItem(
-      constants.LOCAL_STORAGE_LOG_IN_EMAIL
+      common.LOCAL_STORAGE_LOG_IN_EMAIL
     );
     return this.auth.signInWithEmailLink(email, window.location.href);
   };
@@ -76,8 +78,8 @@ export default class Firebase {
   };
 
   getImage = (filepath) => {
-    return this.storage.child(filepath).getDownloadURL()
-  }
+    return this.storage.child(filepath).getDownloadURL();
+  };
 
   firestoreCreate = (collectionName, payload) => {
     return this.firestore
@@ -92,12 +94,6 @@ export default class Firebase {
       batch.set(docRef, Object.assign({}, p));
     });
     return batch.commit();
-  };
-
-  firestoreRead = (path) => {
-    return request
-        .get(buildURL(process.env.REACT_APP_API_PATH, path))
-        .set("Authorization", "Bearer " + this.userToken);
   };
 
   firestoreUpdate = (path, body) => {

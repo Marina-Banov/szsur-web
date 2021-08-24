@@ -1,36 +1,20 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { LinearProgress } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import { Button, Card, CardBody, Table } from "reactstrap";
 import { Link } from "react-router-dom";
 
-import constants from "appConstants";
+import { paths } from "../../../constants";
 import { useFirebase } from "appFirebase";
 import { actions, selectors } from "store";
 
-function Events({ events, setEvents }) {
+function Events({ events, loading, getEvents }) {
   const { t } = useTranslation();
   const firebase = useFirebase();
-  const [loading, setLoading] = useState();
-
-  const getEvents = useCallback(() => {
-    firebase
-      .firestoreRead(constants.FIRESTORE_EVENTS_PATH)
-      .then((res) => {
-        setEvents(res.body);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setEvents([]);
-        setLoading(false);
-      });
-  }, [firebase, setEvents]);
 
   useEffect(() => {
     if (!events) {
-      setLoading(true);
       getEvents();
     }
   }, [events, getEvents]);
@@ -43,13 +27,11 @@ function Events({ events, setEvents }) {
   }
 
   function deleteEvent(id) {
-    setLoading(true);
     firebase
-      .firestoreDelete(constants.FIRESTORE_EVENTS_PATH, id)
-      .then(() => getEvents())
+      .firestoreDelete(paths.EVENTS, id)
+      .then(() => actions.events.getEvents())
       .catch((err) => {
         console.error(err);
-        setLoading(false);
       });
   }
 
@@ -111,11 +93,12 @@ function Events({ events, setEvents }) {
 }
 
 const mapStateToProps = (state) => ({
-  events: selectors.getEvents(state),
+  events: selectors.events.getEvents(state),
+  loading: selectors.events.getIsLoading(state),
 });
 
 const mapDispatchToProps = {
-  ...actions
-}
+  getEvents: actions.events.getEvents,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Events);

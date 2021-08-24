@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
-import constants from "appConstants";
+import { paths } from "../../../constants";
 import { useFirebase } from "appFirebase";
 import { CmsPage, CmsEvents } from "components/common";
 import handlePromise from "utils/handlePromise";
@@ -12,20 +12,15 @@ export default function NewEvent() {
   const history = useHistory();
   const firebase = useFirebase();
   const [loading, setLoading] = useState(false);
-  const {
-    data,
-    handleInputChange,
-    setFormField,
-    handleSubmit,
-    errors,
-  } = useForm(new EventForm(), EventFormValidation, onSubmit);
+  const { data, handleInputChange, setFormField, handleSubmit, errors } =
+    useForm(new EventForm(), EventFormValidation, onSubmit);
 
   async function onSubmit() {
     setLoading(true);
     let body = new Event(data);
 
     const res = await handlePromise(
-      firebase.firestoreCreate(constants.FIRESTORE_EVENTS_PATH, body)
+      firebase.firestoreCreate(paths.EVENTS, body)
     );
     if (res.error) {
       setLoading(false);

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
-import constants from "appConstants";
+import { paths, common } from "../../../constants";
 import { useFirebase } from "appFirebase";
 import { CmsPage, CmsSurveys } from "components/common";
 import handlePromise from "utils/handlePromise";
@@ -18,20 +18,15 @@ export default function NewSurvey() {
   const history = useHistory();
   const firebase = useFirebase();
   const [loading, setLoading] = useState(false);
-  const {
-    data,
-    handleInputChange,
-    setFormField,
-    handleSubmit,
-    errors,
-  } = useForm(new SurveyForm(), SurveyFormValidation, onSubmit);
+  const { data, handleInputChange, setFormField, handleSubmit, errors } =
+    useForm(new SurveyForm(), SurveyFormValidation, onSubmit);
 
   async function onSubmit() {
     setLoading(true);
     let body = new Survey(data);
 
     const res1 = await handlePromise(
-      firebase.firestoreCreate(constants.FIRESTORE_SURVEYS_PATH, body)
+      firebase.firestoreCreate(paths.SURVEYS, body)
     );
     if (res1.error) {
       setLoading(false);
@@ -42,7 +37,7 @@ export default function NewSurvey() {
 
     const res2 = await handlePromise(
       firebase.firestoreCreateBulk(
-        constants.FIRESTORE_QUESTIONS_COLLECTION,
+        common.FIRESTORE_QUESTIONS_COLLECTION,
         new Questions(data).questions,
         res1.data
       )

@@ -1,48 +1,30 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { LinearProgress } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import { Button, Card, CardBody, Table } from "reactstrap";
 import { Link } from "react-router-dom";
 
-import constants from "appConstants";
+import { paths } from "../../../constants";
 import { useFirebase } from "appFirebase";
 import { actions, selectors } from "store";
 
-function Surveys({ surveys, setSurveys }) {
+function Surveys({ surveys, getSurveys, loading }) {
   const { t } = useTranslation();
   const firebase = useFirebase();
-  const [loading, setLoading] = useState();
-
-  const getSurveys = useCallback(() => {
-    firebase
-      .firestoreRead(constants.FIRESTORE_SURVEYS_PATH)
-      .then((res) => {
-        setSurveys(res.body);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setSurveys([]);
-        setLoading(false);
-      });
-  }, [firebase, setSurveys]);
 
   useEffect(() => {
     if (!surveys) {
-      setLoading(true);
       getSurveys();
     }
   }, [surveys, getSurveys]);
 
   function deleteSurvey(id) {
-    setLoading(true);
     firebase
-      .firestoreDelete(constants.FIRESTORE_SURVEYS_PATH, id)
+      .firestoreDelete(paths.SURVEYS, id)
       .then(() => getSurveys())
       .catch((err) => {
         console.error(err);
-        setLoading(false);
       });
   }
 
@@ -82,18 +64,13 @@ function Surveys({ surveys, setSurveys }) {
                     />
                   </td>
                   <td>
-                    {
-                    s.published ?
+                    {s.published ? (
                       <Link to={{ pathname: `surveys/${s.id}`, index }}>
-                        <Button className="mr-2 mb-1 py-1">
-                          {t("edit")}
-                        </Button>
+                        <Button className="mr-2 mb-1 py-1">{t("edit")}</Button>
                       </Link>
-                    :
-                      <Button className="mr-2 mb-1 py-1">
-                        {t("publish")}
-                      </Button>
-                    }
+                    ) : (
+                      <Button className="mr-2 mb-1 py-1">{t("publish")}</Button>
+                    )}
                     <Button
                       color="danger"
                       className="py-1"
@@ -119,11 +96,12 @@ function Surveys({ surveys, setSurveys }) {
 }
 
 const mapStateToProps = (state) => ({
-  surveys: selectors.getSurveys(state),
+  surveys: selectors.surveys.getSurveys(state),
+  loading: selectors.surveys.getIsLoading(state),
 });
 
 const mapDispatchToProps = {
-  ...actions
-}
+  getSurveys: actions.surveys.getSurveys,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Surveys);

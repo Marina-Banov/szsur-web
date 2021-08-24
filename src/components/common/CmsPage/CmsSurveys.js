@@ -4,7 +4,7 @@ import { Divider } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 
 import { SurveyFormFields as FormFields } from "models";
-import constants from "appConstants";
+import { common } from "../../../constants";
 import NewQuestion from "./NewQuestion";
 
 export default function CmsSurveys({
@@ -19,7 +19,7 @@ export default function CmsSurveys({
     const t = [...form.questions];
     t.push({
       question: "",
-      type: constants.SURVEY_QUESTION_TYPE_TEXT,
+      type: common.SURVEY_QUESTION_TYPE_TEXT,
     });
     setFormField(FormFields.questions, t);
   }
@@ -72,20 +72,20 @@ export default function CmsSurveys({
           />
         ))}
 
-        {!form.published &&
+        {!form.published && (
           <FormGroup>
             <Divider className="mb-3" />
             <Button
               block
               color="success"
               onClick={addQuestion}
-              disabled={form.questions.length === constants.SURVEY_MAX_QUESTIONS}
+              disabled={form.questions.length === common.SURVEY_MAX_QUESTIONS}
             >
               <i className="fa fa-plus" />
               &nbsp; {t("surveys.new_question")}
             </Button>
           </FormGroup>
-        }
+        )}
       </CardBody>
     </Card>
   );

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import constants from "appConstants";
+import { paths, common } from "../../../constants";
 import { useFirebase } from "appFirebase";
 import { CmsPage, CmsSurveys } from "components/common";
 import handlePromise from "utils/handlePromise";
@@ -51,7 +51,7 @@ function EditSurvey({ surveys, setSurveyImage, loadSurveysImages }) {
     let body = new Survey(data);
 
     const res1 = await handlePromise(
-      firebase.firestoreUpdate(constants.FIRESTORE_SURVEYS_PATH, body)
+      firebase.firestoreUpdate(paths.SURVEYS, body)
     );
     if (res1.error) {
       setLoading(false);
@@ -62,7 +62,7 @@ function EditSurvey({ surveys, setSurveyImage, loadSurveysImages }) {
 
     const res2 = await handlePromise(
       firebase.firestoreCreateBulk(
-        constants.FIRESTORE_QUESTIONS_COLLECTION,
+        common.FIRESTORE_QUESTIONS_COLLECTION,
         new Questions(data).questions,
         res1.data
       )
@@ -97,8 +97,8 @@ function EditSurvey({ surveys, setSurveyImage, loadSurveysImages }) {
 }
 
 const mapStateToProps = (state) => ({
-  surveys: selectors.getSurveys(state),
-  loadSurveysImages: selectors.getLoadSurveysImages(state),
+  surveys: selectors.surveys.getSurveys(state),
+  //loadSurveysImages: selectors.getLoadSurveysImages(state),
 });
 
 const mapDispatchToProps = {

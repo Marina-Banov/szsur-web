@@ -3,12 +3,12 @@ import { TextField } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 
 import { useFirebase } from "appFirebase";
-import constants from "appConstants";
+import { common } from "../../../constants";
 
 export default function LoginWithEmailLink({ cancel }) {
   const { t } = useTranslation();
   const [email, setEmail] = useState(
-    window.localStorage.getItem(constants.LOCAL_STORAGE_LOG_IN_EMAIL) || ""
+    window.localStorage.getItem(common.LOCAL_STORAGE_LOG_IN_EMAIL) || ""
   );
   const [errorResponse, setErrorResponse] = useState("");
   const firebase = useFirebase();
@@ -17,10 +17,7 @@ export default function LoginWithEmailLink({ cancel }) {
     firebase
       .sendLoginLink(email)
       .then(() => {
-        window.localStorage.setItem(
-          constants.LOCAL_STORAGE_LOG_IN_EMAIL,
-          email
-        );
+        window.localStorage.setItem(common.LOCAL_STORAGE_LOG_IN_EMAIL, email);
         setErrorResponse("login.email_sent");
       })
       .catch(() => {

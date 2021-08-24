@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { CircularProgress } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
@@ -12,36 +12,26 @@ import {
   Label,
 } from "reactstrap";
 
-import constants from "appConstants";
+import { paths } from "../../../constants";
 import { useFirebase } from "appFirebase";
 import { actions, selectors } from "store";
 
-function TagsCard({ tags, setTags, errors, setFormField, FormFields, form }) {
+function TagsCard({
+  tags,
+  getTags,
+  loading,
+  errors,
+  setFormField,
+  FormFields,
+  form,
+}) {
   const { t } = useTranslation();
   const firebase = useFirebase();
   const [tagInput, setTagInput] = useState("");
-  const [loading, setLoading] = useState(true);
-
-  const getTags = useCallback(() => {
-    firebase
-      .firestoreRead(constants.FIRESTORE_TAGS_PATH)
-      .then((res) => {
-        setTags(res.body.values);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setTags([]);
-        setLoading(false);
-      });
-  }, [firebase, setTags]);
 
   useEffect(() => {
     if (!tags) {
-      setLoading(true);
       getTags();
-    } else {
-      setLoading(false);
     }
   }, [getTags, tags]);
 
@@ -60,18 +50,15 @@ function TagsCard({ tags, setTags, errors, setFormField, FormFields, form }) {
     if (tagInput === "") {
       return;
     }
-    setLoading(true);
     const t = [...tags];
     t.push(tagInput);
     firebase
-      .firestoreUpdate(constants.FIRESTORE_TAGS_PATH, { values: t })
-      .then((res) => {
+      .firestoreUpdate(paths.TAGS, { values: t })
+      .then((_) => {
         setTagInput("");
         getTags();
       })
       .catch((err) => {
-        setLoading(false);
-        setTags([]);
         console.error(err);
       });
   }
@@ -87,6 +74,7 @@ function TagsCard({ tags, setTags, errors, setFormField, FormFields, form }) {
             <CircularProgress />
           </div>
         ) : (
+          tags &&
           Object.values(tags).map((tag) => (
             <Button
               color={form.tags.includes(tag) ? "primary" : "secondary"}
@@ -120,11 +108,12 @@ function TagsCard({ tags, setTags, errors, setFormField, FormFields, form }) {
 }
 
 const mapStateToProps = (state) => ({
-  tags: selectors.getTags(state),
+  tags: selectors.tags.getTags(state),
+  loading: selectors.tags.getIsLoading(state),
 });
 
 const mapDispatchToProps = {
-  ...actions
-}
+  getTags: actions.tags.getTags,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(TagsCard);
