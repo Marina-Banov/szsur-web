@@ -20,7 +20,7 @@ function Events({ events, loading, getEvents }) {
   }, [events, getEvents]);
 
   function displayDate(e) {
-    return new Date(e.startTime._seconds * 1000).toLocaleString("hr", {
+    return new Date(e.startTime).toLocaleString("hr", {
       dateStyle: "long",
       timeStyle: "short",
     });

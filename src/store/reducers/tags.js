@@ -20,6 +20,19 @@ const actionMap = {
     data: [],
     isLoading: false,
   }),
+  [actions.UPDATE_TAGS_REQUEST]: (state, _) => ({
+    ...state,
+    isLoading: true,
+  }),
+  [actions.UPDATE_TAGS_SUCCESS]: (state, action) => ({
+    ...state,
+    data: action.data.values,
+    isLoading: false,
+  }),
+  [actions.UPDATE_TAGS_ERROR]: (state, _) => ({
+    ...state,
+    isLoading: false,
+  }),
 };
 
 export default (state = initialState, action) => {

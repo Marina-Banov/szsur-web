@@ -29,30 +29,35 @@ export default function CmsEvents({
   });
 
   useEffect(() => {
-    if (typeof form.location.valueOnsite !== "string" || form.location.valueOnsite === "") {
+    if (
+      typeof form.location.valueOnsite !== "string" ||
+      form.location.valueOnsite === ""
+    ) {
       return;
     }
 
-    const placesService = new window.google.maps.places.PlacesService(document.createElement('div'))
+    const placesService = new window.google.maps.places.PlacesService(
+      document.createElement("div")
+    );
 
     placesService?.getDetails(
-     {
-       placeId: form.location.valueOnsite,
-       fields: [
-         'address_components',
-         'formatted_address',
-         'geometry',
-         'place_id',
-         'name'
-       ]
-     },
+      {
+        placeId: form.location.valueOnsite,
+        fields: [
+          "address_components",
+          "formatted_address",
+          "geometry",
+          "place_id",
+          "name",
+        ],
+      },
       (valueOnsite) => {
-        ref.current.value = valueOnsite.name
+        ref.current.value = valueOnsite.name;
         setFormField(FormFields.location, {
           online: false,
           valueOnline: "",
-          valueOnsite
-        })
+          valueOnsite,
+        });
       }
     );
   }, [form.location.valueOnsite, ref, setFormField]);
@@ -88,7 +93,6 @@ export default function CmsEvents({
               </Label>
               <DatePicker
                 id="startDate"
-                minDate={new Date().toString()}
                 invalid={errors.includes(FormFields.startDate)}
                 className="mb-2"
                 onChange={(v) => setFormField(FormFields.startDate, v)}
@@ -96,14 +100,13 @@ export default function CmsEvents({
               />
             </FormGroup>
             <FormGroup>
+              <Label for={FormFields.startTime}>{t("events.start_time")}</Label>
               <TimePicker
-                label={t("events.start_time")}
-                order={0}
+                id={FormFields.startTime}
+                name={FormFields.startTime}
                 invalid={errors.includes(FormFields.startTime)}
-                onChange={(v) =>
-                  setFormField(FormFields.startTime, v.target.value)
-                }
-                date={form.startTime}
+                initialValue={form.startDate}
+                onChange={(value) => setFormField(FormFields.startTime, value)}
               />
             </FormGroup>
           </Col>
@@ -125,14 +128,13 @@ export default function CmsEvents({
               />
             </FormGroup>
             <FormGroup>
+              <Label for={FormFields.endTime}>{t("events.end_time")}</Label>
               <TimePicker
-                label={t("events.end_time")}
-                order={1}
+                id={FormFields.endTime}
+                name={FormFields.endTime}
                 invalid={errors.includes(FormFields.endTime)}
-                onChange={(v) =>
-                  setFormField(FormFields.endTime, v.target.value)
-                }
-                date={form.endTime}
+                initialValue={form.endDate}
+                onChange={(value) => setFormField(FormFields.endTime, value)}
               />
             </FormGroup>
           </Col>

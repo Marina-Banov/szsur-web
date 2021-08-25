@@ -1,8 +1,7 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
-import { paths, common } from "../../../constants";
 import { useFirebase } from "appFirebase";
 import { CmsPage, CmsSurveys } from "components/common";
 import handlePromise from "utils/handlePromise";
@@ -16,63 +15,36 @@ import {
 } from "models";
 import { actions, selectors } from "store";
 
-function EditSurvey({ surveys, setSurveyImage, loadSurveysImages }) {
+function EditSurvey({
+  updateSurvey,
+  surveys,
+  setSurveyImage,
+  loadSurveysImages,
+  loading,
+}) {
   const history = useHistory();
   const firebase = useFirebase();
-  const [loading, setLoading] = useState(false);
-  const { index } = history.location;
+  const { id } = useParams();
+  const survey = surveys?.find((s) => s.id === id) || {};
   const { data, handleInputChange, setFormField, handleSubmit, errors } =
-    useForm(
-      new SurveyForm({ ...surveys[index] }),
-      SurveyFormValidation,
-      onSubmit
-    );
+    useForm(new SurveyForm({ ...survey }), SurveyFormValidation, onSubmit);
 
   const getSurveyImage = useCallback(async () => {
+    /*
     if (!surveys || !loadSurveysImages || !loadSurveysImages[index]) {
       return;
     }
     const imageURL = await firebase.getImage(surveys[index].image);
     setSurveyImage(index, imageURL);
-    setFormField(SurveyFormFields.image, imageURL);
-  }, [
-    firebase,
-    index,
-    loadSurveysImages,
-    setFormField,
-    setSurveyImage,
-    surveys,
-  ]);
+    setFormField(SurveyFormFields.image, imageURL);*/
+  }, []);
 
   useEffect(getSurveyImage);
 
   async function onSubmit() {
-    setLoading(true);
-    let body = new Survey(data);
-
-    const res1 = await handlePromise(
-      firebase.firestoreUpdate(paths.SURVEYS, body)
-    );
-    if (res1.error) {
-      setLoading(false);
-      return;
-    }
-
-    await handlePromise(firebase.uploadFile(body.image, data.image));
-
-    const res2 = await handlePromise(
-      firebase.firestoreCreateBulk(
-        common.FIRESTORE_QUESTIONS_COLLECTION,
-        new Questions(data).questions,
-        res1.data
-      )
-    );
-    if (res2.error) {
-      setLoading(false);
-      return;
-    }
-
-    setLoading(false);
+    const body = new Survey(data);
+    updateSurvey(id, body);
+    // await handlePromise(firebase.uploadFile(body.image, data.image));
     history.push("/surveys");
   }
 
@@ -84,7 +56,7 @@ function EditSurvey({ surveys, setSurveyImage, loadSurveysImages }) {
       FormFields={SurveyFormFields}
       errors={errors}
       loading={loading}
-      submitButtonText={"surveys.add_new_survey"}
+      submitButtonText={"save_changes"}
     >
       <CmsSurveys
         form={data}
@@ -98,11 +70,12 @@ function EditSurvey({ surveys, setSurveyImage, loadSurveysImages }) {
 
 const mapStateToProps = (state) => ({
   surveys: selectors.surveys.getSurveys(state),
+  loading: selectors.surveys.getIsLoading(state),
   //loadSurveysImages: selectors.getLoadSurveysImages(state),
 });
 
 const mapDispatchToProps = {
-  ...actions,
+  updateSurvey: actions.surveys.updateSurvey,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditSurvey);

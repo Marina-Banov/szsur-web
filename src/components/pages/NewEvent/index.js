@@ -27,7 +27,7 @@ export default function NewEvent() {
       return;
     }
 
-    await handlePromise(firebase.uploadFile(body.image, data.image));
+    // await handlePromise(firebase.uploadFile(body.image, data.image));
 
     setLoading(false);
     history.push("/events");

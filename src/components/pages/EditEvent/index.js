@@ -1,36 +1,25 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React from "react";
+import { useHistory, useParams } from "react-router-dom";
+import { connect } from "react-redux";
 
-import { paths } from "../../../constants";
 import { useFirebase } from "appFirebase";
 import { CmsPage, CmsEvents } from "components/common";
-import handlePromise from "utils/handlePromise";
 import useForm from "utils/useForm";
 import { Event, EventForm, EventFormFields, EventFormValidation } from "models";
+import { actions, selectors } from "store";
 
-export default function EditEvent() {
+function EditEvent({ events, loading, updateEvent }) {
   const history = useHistory();
-  const firebase = useFirebase();
-  const [loading, setLoading] = useState(false);
-  const { event } = history.location;
+  const { id } = useParams();
+  const event = events?.find((e) => e.id === id) || {};
   const { data, handleInputChange, setFormField, handleSubmit, errors } =
     useForm(new EventForm({ ...event }), EventFormValidation, onSubmit);
+  const firebase = useFirebase();
 
   async function onSubmit() {
-    setLoading(true);
     let body = new Event(data);
-
-    const res = await handlePromise(
-      firebase.firestoreUpdate(paths.EVENTS, body)
-    );
-    if (res.error) {
-      setLoading(false);
-      return;
-    }
-
-    await handlePromise(firebase.uploadFile(body.image, data.image));
-
-    setLoading(false);
+    updateEvent(event.id, body);
+    // await firebase.uploadFile(body.image, data.image);
     history.push("/events");
   }
 
@@ -42,7 +31,7 @@ export default function EditEvent() {
       FormFields={EventFormFields}
       errors={errors}
       loading={loading}
-      submitButtonText={"events.add_new_event"}
+      submitButtonText={"save_changes"}
     >
       <CmsEvents
         form={data}
@@ -53,3 +42,14 @@ export default function EditEvent() {
     </CmsPage>
   );
 }
+
+const mapStateToProps = (state) => ({
+  events: selectors.events.getEvents(state),
+  loading: selectors.events.getIsLoading(state),
+});
+
+const mapDispatchToProps = {
+  updateEvent: actions.events.updateEvent,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditEvent);

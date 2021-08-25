@@ -8,6 +8,14 @@ const getTags = () =>
     actions.GET_TAGS_ERROR,
   ]);
 
+const updateTags = (body) =>
+  api.update(paths.TAGS, body, [
+    actions.UPDATE_TAGS_REQUEST,
+    actions.UPDATE_TAGS_SUCCESS,
+    actions.UPDATE_TAGS_ERROR,
+  ]);
+
 export default {
   getTags,
+  updateTags,
 };

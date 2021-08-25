@@ -5,12 +5,11 @@ export default class Event {
   constructor(form) {
     this.title = form.title;
     this.description = form.description;
-    this.startTime = new Date(
-      combineDateTime(form.startDate, getISOTime(form.startTime))
+    this.startTime = combineDateTime(
+      form.startDate,
+      getISOTime(form.startTime)
     );
-    this.endTime = new Date(
-      combineDateTime(form.endDate, getISOTime(form.endTime))
-    );
+    this.endTime = combineDateTime(form.endDate, getISOTime(form.endTime));
     this.online = form.location.online;
     this.location = form.location.online
       ? form.location.valueOnline

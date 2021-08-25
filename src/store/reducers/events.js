@@ -20,6 +20,24 @@ const actionMap = {
     data: [],
     isLoading: false,
   }),
+  [actions.UPDATE_EVENT_REQUEST]: (state, _) => ({
+    ...state,
+    isLoading: true,
+  }),
+  [actions.UPDATE_EVENT_SUCCESS]: (state, action) => {
+    const index = state.data.findIndex((e) => e.id === action.data.id);
+    if (index >= 0) {
+      state.data[index] = { ...state.data[index], ...action.data };
+    }
+    return {
+      ...state,
+      isLoading: false,
+    };
+  },
+  [actions.UPDATE_EVENT_ERROR]: (state, _) => ({
+    ...state,
+    isLoading: false,
+  }),
 };
 
 export default (state = initialState, action) => {

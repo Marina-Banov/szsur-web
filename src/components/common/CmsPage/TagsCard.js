@@ -12,13 +12,12 @@ import {
   Label,
 } from "reactstrap";
 
-import { paths } from "../../../constants";
-import { useFirebase } from "appFirebase";
 import { actions, selectors } from "store";
 
 function TagsCard({
   tags,
   getTags,
+  updateTags,
   loading,
   errors,
   setFormField,
@@ -26,7 +25,6 @@ function TagsCard({
   form,
 }) {
   const { t } = useTranslation();
-  const firebase = useFirebase();
   const [tagInput, setTagInput] = useState("");
 
   useEffect(() => {
@@ -50,17 +48,8 @@ function TagsCard({
     if (tagInput === "") {
       return;
     }
-    const t = [...tags];
-    t.push(tagInput);
-    firebase
-      .firestoreUpdate(paths.TAGS, { values: t })
-      .then((_) => {
-        setTagInput("");
-        getTags();
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    updateTags({ values: [...tags, tagInput] });
+    setTagInput("");
   }
 
   return (
@@ -69,12 +58,13 @@ function TagsCard({
     >
       <CardHeader>{t("tags.tags")}</CardHeader>
       <CardBody>
-        {loading ? (
+        {loading && (
           <div className="flex_center_center">
             <CircularProgress />
           </div>
-        ) : (
-          tags &&
+        )}
+        {tags &&
+          !loading &&
           Object.values(tags).map((tag) => (
             <Button
               color={form.tags.includes(tag) ? "primary" : "secondary"}
@@ -84,8 +74,7 @@ function TagsCard({
             >
               {tag}
             </Button>
-          ))
-        )}
+          ))}
         <FormGroup className="mt-3">
           <Label for="tag">{t("tags.add_new_tag")}</Label>
           <div className="flex_center_center input-with-button">
@@ -114,6 +103,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   getTags: actions.tags.getTags,
+  updateTags: actions.tags.updateTags,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TagsCard);

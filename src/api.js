@@ -33,4 +33,27 @@ const get =
     }
   };
 
-export default { setToken, get };
+const update =
+  (path, body, [REQUEST, SUCCESS, ERROR]) =>
+  async (dispatch) => {
+    await dispatch({
+      type: REQUEST,
+    });
+    try {
+      const response = await request
+        .put(buildURL(process.env.REACT_APP_API_PATH, path))
+        .set("Authorization", "Bearer " + authToken)
+        .send(body);
+      return dispatch({
+        type: SUCCESS,
+        data: response.body,
+      });
+    } catch (error) {
+      return dispatch({
+        type: ERROR,
+        error,
+      });
+    }
+  };
+
+export default { setToken, get, update };

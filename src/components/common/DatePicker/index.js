@@ -30,6 +30,7 @@ export default function DatePicker({ ...props }) {
       dayLabels={weekdays()}
       onClear={() => {}}
       showClearButton={false}
+      autoComplete="off"
       {...props}
     />
   );

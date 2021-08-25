@@ -6,9 +6,7 @@ export default class Survey {
     this.description = form.description;
     this.image = paths.SURVEYS_STORAGE + form.image.name;
     this.tags = form.tags;
-    this.published = false;
-    this.subscribers = [];
-    this.answersCount = 0;
+    this.published = form.published;
   }
 }
 
