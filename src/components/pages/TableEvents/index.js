@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { LinearProgress } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
@@ -7,14 +7,8 @@ import { Link } from "react-router-dom";
 
 import { actions, selectors } from "store";
 
-function Events({ events, loading, getEvents, deleteEvent }) {
+function Events({ events, getEvents, loading, deleteEvent }) {
   const { t } = useTranslation();
-
-  useEffect(() => {
-    if (!events) {
-      getEvents();
-    }
-  }, [events, getEvents]);
 
   function displayDate(e) {
     return new Date(e.startTime).toLocaleString("hr", {
@@ -26,6 +20,9 @@ function Events({ events, loading, getEvents, deleteEvent }) {
   return (
     <Card>
       <CardBody>
+        <Button className="m-b m-r" onClick={getEvents}>
+          <i className="fa fa-refresh" />
+        </Button>
         <Link to="/events/new">
           <Button className="m-b" color="success">
             <i className="fa fa-plus" />

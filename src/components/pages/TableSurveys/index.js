@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { LinearProgress } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
@@ -10,15 +10,12 @@ import { actions, selectors } from "store";
 function Surveys({ surveys, getSurveys, loading, deleteSurvey }) {
   const { t } = useTranslation();
 
-  useEffect(() => {
-    if (!surveys) {
-      getSurveys();
-    }
-  }, [surveys, getSurveys]);
-
   return (
     <Card>
       <CardBody>
+        <Button className="m-b m-r" onClick={getSurveys}>
+          <i className="fa fa-refresh" />
+        </Button>
         <Link to="/surveys/new">
           <Button className="m-b" color="success">
             <i className="fa fa-plus" />

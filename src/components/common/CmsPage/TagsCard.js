@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { CircularProgress } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
@@ -16,7 +16,6 @@ import { actions, selectors } from "store";
 
 function TagsCard({
   tags,
-  getTags,
   updateTags,
   loading,
   errors,
@@ -26,12 +25,6 @@ function TagsCard({
 }) {
   const { t } = useTranslation();
   const [tagInput, setTagInput] = useState("");
-
-  useEffect(() => {
-    if (!tags) {
-      getTags();
-    }
-  }, [getTags, tags]);
 
   function handleTagClick(tag) {
     const t = [...form.tags];
@@ -102,7 +95,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  getTags: actions.tags.getTags,
   updateTags: actions.tags.updateTags,
 };
 
