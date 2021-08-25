@@ -76,12 +76,6 @@ export default class Firebase {
     return this.storage.child(filepath).getDownloadURL();
   };
 
-  firestoreCreate = (collectionName, payload) => {
-    return this.firestore
-      .collection(collectionName)
-      .add(Object.assign({}, payload));
-  };
-
   firestoreCreateBulk = (collectionName, payload, doc = this.firestore) => {
     const batch = this.firestore.batch();
     payload.forEach((p) => {

@@ -17,6 +17,7 @@ export default class SurveyForm {
         tags: [],
         questions: [],
         published: false,
+        answersCount: 0,
       },
       survey
     );

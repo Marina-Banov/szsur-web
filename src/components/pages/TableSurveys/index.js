@@ -43,7 +43,7 @@ function Surveys({ surveys, getSurveys, loading, deleteSurvey }) {
               </tr>
             )}
             {surveys ? (
-              surveys.map((s, index) => (
+              surveys.map((s) => (
                 <tr key={s.id}>
                   <td>{s.title}</td>
                   <td>{s.answersCount}</td>
@@ -54,7 +54,7 @@ function Surveys({ surveys, getSurveys, loading, deleteSurvey }) {
                   </td>
                   <td>
                     {s.published ? (
-                      <Link to={{ pathname: `surveys/${s.id}`, index }}>
+                      <Link to={{ pathname: `surveys/${s.id}` }}>
                         <Button className="mr-2 mb-1 py-1">{t("edit")}</Button>
                       </Link>
                     ) : (

@@ -9,6 +9,13 @@ const getSurveys = () =>
     actions.GET_SURVEYS_ERROR,
   ]);
 
+const addSurvey = (body) =>
+  api.add(paths.SURVEYS, body, [
+    actions.POST_SURVEY_REQUEST,
+    actions.POST_SURVEY_SUCCESS,
+    actions.POST_SURVEY_ERROR,
+  ]);
+
 const updateSurvey = (id, body) =>
   api.update(buildURLFromParams(paths.SURVEYS_ID, id), body, [
     actions.UPDATE_SURVEY_REQUEST,
@@ -25,6 +32,7 @@ const deleteSurvey = (id) =>
 
 export default {
   getSurveys,
+  addSurvey,
   updateSurvey,
   deleteSurvey,
 };

@@ -11,6 +11,29 @@ const setToken = (token) => {
    */
 };
 
+const add =
+  (path, body, [REQUEST, SUCCESS, ERROR]) =>
+  async (dispatch) => {
+    await dispatch({
+      type: REQUEST,
+    });
+    try {
+      const response = await request
+        .post(buildURL(process.env.REACT_APP_API_PATH, path))
+        .set("Authorization", "Bearer " + authToken)
+        .send(body);
+      return dispatch({
+        type: SUCCESS,
+        data: response.body,
+      });
+    } catch (error) {
+      return dispatch({
+        type: ERROR,
+        error,
+      });
+    }
+  };
+
 const get =
   (path, [REQUEST, SUCCESS, ERROR]) =>
   async (dispatch) => {
@@ -78,4 +101,4 @@ const remove =
     }
   };
 
-export default { setToken, get, update, remove };
+export default { setToken, add, get, update, remove };

@@ -9,6 +9,13 @@ const getEvents = () =>
     actions.GET_EVENTS_ERROR,
   ]);
 
+const addEvent = (body) =>
+  api.add(paths.EVENTS, body, [
+    actions.POST_EVENT_REQUEST,
+    actions.POST_EVENT_SUCCESS,
+    actions.POST_EVENT_ERROR,
+  ]);
+
 const updateEvent = (id, body) =>
   api.update(buildURLFromParams(paths.EVENTS_ID, id), body, [
     actions.UPDATE_EVENT_REQUEST,
@@ -25,6 +32,7 @@ const deleteEvent = (id) =>
 
 export default {
   getEvents,
+  addEvent,
   updateEvent,
   deleteEvent,
 };

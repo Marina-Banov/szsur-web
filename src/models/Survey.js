@@ -7,6 +7,7 @@ export default class Survey {
     this.image = paths.SURVEYS_STORAGE + form.image.name;
     this.tags = form.tags;
     this.published = form.published;
+    this.answersCount = form.answersCount;
   }
 }
 

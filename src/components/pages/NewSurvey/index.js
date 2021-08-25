@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
+import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import { paths, common } from "../../../constants";
 import { useFirebase } from "appFirebase";
 import { CmsPage, CmsSurveys } from "components/common";
 import handlePromise from "utils/handlePromise";
@@ -13,41 +13,31 @@ import {
   SurveyFormFields,
   SurveyFormValidation,
 } from "models";
+import { actions, selectors } from "store";
 
-export default function NewSurvey() {
+function NewSurvey({ addSurvey, loading }) {
   const history = useHistory();
   const firebase = useFirebase();
-  const [loading, setLoading] = useState(false);
   const { data, handleInputChange, setFormField, handleSubmit, errors } =
     useForm(new SurveyForm(), SurveyFormValidation, onSubmit);
 
   async function onSubmit() {
-    setLoading(true);
-    let body = new Survey(data);
+    const body = new Survey(data);
+    addSurvey(body);
 
-    const res1 = await handlePromise(
-      firebase.firestoreCreate(paths.SURVEYS, body)
-    );
-    if (res1.error) {
-      setLoading(false);
-      return;
-    }
+    /*    await handlePromise(firebase.uploadFile(body.image, data.image));
 
-    await handlePromise(firebase.uploadFile(body.image, data.image));
-
-    const res2 = await handlePromise(
-      firebase.firestoreCreateBulk(
-        common.FIRESTORE_QUESTIONS_COLLECTION,
-        new Questions(data).questions,
-        res1.data
-      )
-    );
-    if (res2.error) {
-      setLoading(false);
-      return;
-    }
-
-    setLoading(false);
+        const res2 = await handlePromise(
+          firebase.firestoreCreateBulk(
+            common.FIRESTORE_QUESTIONS_COLLECTION,
+            new Questions(data).questions,
+            res1.data
+          )
+        );
+        if (res2.error) {
+          setLoading(false);
+          return;
+        }*/
     history.push("/surveys");
   }
 
@@ -70,3 +60,13 @@ export default function NewSurvey() {
     </CmsPage>
   );
 }
+
+const mapStateToProps = (state) => ({
+  loading: selectors.surveys.getIsLoading(state),
+});
+
+const mapDispatchToProps = {
+  addSurvey: actions.surveys.addSurvey,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewSurvey);

@@ -54,7 +54,7 @@ function Events({ events, loading, getEvents, deleteEvent }) {
                   <td>{e.title}</td>
                   <td>{displayDate(e)}</td>
                   <td>
-                    <Link to={{ pathname: `events/${e.id}`, event: e }}>
+                    <Link to={{ pathname: `events/${e.id}` }}>
                       <Button className="mr-2 mb-1 py-1">{t("edit")}</Button>
                     </Link>
                     <Button

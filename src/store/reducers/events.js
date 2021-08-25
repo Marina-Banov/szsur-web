@@ -45,7 +45,7 @@ const actionMap = {
   [actions.DELETE_EVENT_SUCCESS]: (state, action) => {
     const index = state.data.findIndex((e) => e.id === action.data.id);
     if (index >= 0) {
-      delete state.data[index];
+      state.data.splice(index, 1);
     }
     return {
       ...state,
@@ -53,6 +53,23 @@ const actionMap = {
     };
   },
   [actions.DELETE_EVENT_ERROR]: (state, _) => ({
+    ...state,
+    isLoading: false,
+  }),
+  [actions.POST_EVENT_REQUEST]: (state, _) => ({
+    ...state,
+    isLoading: true,
+  }),
+  [actions.POST_EVENT_SUCCESS]: (state, action) => {
+    const data = [...state.data];
+    data.push(action.data);
+    return {
+      ...state,
+      data,
+      isLoading: false,
+    };
+  },
+  [actions.POST_EVENT_ERROR]: (state, _) => ({
     ...state,
     isLoading: false,
   }),

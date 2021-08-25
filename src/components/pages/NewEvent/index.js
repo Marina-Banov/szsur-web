@@ -1,35 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
+import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import { paths } from "../../../constants";
 import { useFirebase } from "appFirebase";
 import { CmsPage, CmsEvents } from "components/common";
 import handlePromise from "utils/handlePromise";
 import useForm from "utils/useForm";
 import { Event, EventForm, EventFormFields, EventFormValidation } from "models";
+import { actions, selectors } from "store";
 
-export default function NewEvent() {
+function NewEvent({ addEvent, loading }) {
   const history = useHistory();
   const firebase = useFirebase();
-  const [loading, setLoading] = useState(false);
   const { data, handleInputChange, setFormField, handleSubmit, errors } =
     useForm(new EventForm(), EventFormValidation, onSubmit);
 
   async function onSubmit() {
-    setLoading(true);
-    let body = new Event(data);
-
-    const res = await handlePromise(
-      firebase.firestoreCreate(paths.EVENTS, body)
-    );
-    if (res.error) {
-      setLoading(false);
-      return;
-    }
-
+    const body = new Event(data);
+    addEvent(body);
     // await handlePromise(firebase.uploadFile(body.image, data.image));
-
-    setLoading(false);
     history.push("/events");
   }
 
@@ -52,3 +41,13 @@ export default function NewEvent() {
     </CmsPage>
   );
 }
+
+const mapStateToProps = (state) => ({
+  loading: selectors.events.getIsLoading(state),
+});
+
+const mapDispatchToProps = {
+  addEvent: actions.events.addEvent,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewEvent);
