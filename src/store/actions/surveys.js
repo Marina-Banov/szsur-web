@@ -16,7 +16,15 @@ const updateSurvey = (id, body) =>
     actions.UPDATE_SURVEY_ERROR,
   ]);
 
+const deleteSurvey = (id) =>
+  api.remove(buildURLFromParams(paths.SURVEYS_ID, id), [
+    actions.DELETE_SURVEY_REQUEST,
+    actions.DELETE_SURVEY_SUCCESS,
+    actions.DELETE_SURVEY_ERROR,
+  ]);
+
 export default {
   getSurveys,
   updateSurvey,
+  deleteSurvey,
 };

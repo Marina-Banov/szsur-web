@@ -3,10 +3,8 @@ import app from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
-import request from "superagent";
 
 import { common } from "./constants";
-import { buildURL } from "utils/buildURL";
 import api from "./api";
 
 export const FirebaseContext = createContext({});
@@ -29,10 +27,7 @@ export default class Firebase {
       if (!!this.auth.currentUser) {
         this.auth.currentUser.getIdToken(false).then((token) => {
           api.setToken(token);
-          this.userToken = token;
         });
-      } else {
-        this.userToken = "";
       }
     });
     this.firestore = app.firestore();
@@ -94,16 +89,5 @@ export default class Firebase {
       batch.set(docRef, Object.assign({}, p));
     });
     return batch.commit();
-  };
-
-  firestoreUpdate = (path, body) => {
-    return request
-      .put(buildURL(process.env.REACT_APP_API_PATH, path))
-      .set("Authorization", "Bearer " + this.userToken)
-      .send(body);
-  };
-
-  firestoreDelete = (collectionName, id) => {
-    return this.firestore.collection(collectionName).doc(id).delete();
   };
 }

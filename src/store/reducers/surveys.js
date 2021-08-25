@@ -38,6 +38,24 @@ const actionMap = {
     ...state,
     isLoading: false,
   }),
+  [actions.DELETE_SURVEY_REQUEST]: (state, _) => ({
+    ...state,
+    isLoading: true,
+  }),
+  [actions.DELETE_SURVEY_SUCCESS]: (state, action) => {
+    const index = state.data.findIndex((e) => e.id === action.data.id);
+    if (index >= 0) {
+      delete state.data[index];
+    }
+    return {
+      ...state,
+      isLoading: false,
+    };
+  },
+  [actions.DELETE_SURVEY_ERROR]: (state, _) => ({
+    ...state,
+    isLoading: false,
+  }),
 };
 
 export default (state = initialState, action) => {

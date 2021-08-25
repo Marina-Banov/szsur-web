@@ -5,13 +5,10 @@ import { useTranslation } from "react-i18next";
 import { Button, Card, CardBody, Table } from "reactstrap";
 import { Link } from "react-router-dom";
 
-import { paths } from "../../../constants";
-import { useFirebase } from "appFirebase";
 import { actions, selectors } from "store";
 
-function Events({ events, loading, getEvents }) {
+function Events({ events, loading, getEvents, deleteEvent }) {
   const { t } = useTranslation();
-  const firebase = useFirebase();
 
   useEffect(() => {
     if (!events) {
@@ -24,15 +21,6 @@ function Events({ events, loading, getEvents }) {
       dateStyle: "long",
       timeStyle: "short",
     });
-  }
-
-  function deleteEvent(id) {
-    firebase
-      .firestoreDelete(paths.EVENTS, id)
-      .then(() => actions.events.getEvents())
-      .catch((err) => {
-        console.error(err);
-      });
   }
 
   return (
@@ -53,13 +41,14 @@ function Events({ events, loading, getEvents }) {
             </tr>
           </thead>
           <tbody>
-            {loading ? (
+            {loading && (
               <tr>
                 <td colSpan={3} className="no-padding">
                   <LinearProgress />
                 </td>
               </tr>
-            ) : events ? (
+            )}
+            {events ? (
               events.map((e) => (
                 <tr key={e.id}>
                   <td>{e.title}</td>
@@ -99,6 +88,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   getEvents: actions.events.getEvents,
+  deleteEvent: actions.events.deleteEvent,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Events);

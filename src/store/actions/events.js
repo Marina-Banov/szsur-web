@@ -16,7 +16,15 @@ const updateEvent = (id, body) =>
     actions.UPDATE_EVENT_ERROR,
   ]);
 
+const deleteEvent = (id) =>
+  api.remove(buildURLFromParams(paths.EVENTS_ID, id), [
+    actions.DELETE_EVENT_REQUEST,
+    actions.DELETE_EVENT_SUCCESS,
+    actions.DELETE_EVENT_ERROR,
+  ]);
+
 export default {
   getEvents,
   updateEvent,
+  deleteEvent,
 };

@@ -38,6 +38,24 @@ const actionMap = {
     ...state,
     isLoading: false,
   }),
+  [actions.DELETE_EVENT_REQUEST]: (state, _) => ({
+    ...state,
+    isLoading: true,
+  }),
+  [actions.DELETE_EVENT_SUCCESS]: (state, action) => {
+    const index = state.data.findIndex((e) => e.id === action.data.id);
+    if (index >= 0) {
+      delete state.data[index];
+    }
+    return {
+      ...state,
+      isLoading: false,
+    };
+  },
+  [actions.DELETE_EVENT_ERROR]: (state, _) => ({
+    ...state,
+    isLoading: false,
+  }),
 };
 
 export default (state = initialState, action) => {

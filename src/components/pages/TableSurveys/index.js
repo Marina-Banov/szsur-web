@@ -5,28 +5,16 @@ import { useTranslation } from "react-i18next";
 import { Button, Card, CardBody, Table } from "reactstrap";
 import { Link } from "react-router-dom";
 
-import { paths } from "../../../constants";
-import { useFirebase } from "appFirebase";
 import { actions, selectors } from "store";
 
-function Surveys({ surveys, getSurveys, loading }) {
+function Surveys({ surveys, getSurveys, loading, deleteSurvey }) {
   const { t } = useTranslation();
-  const firebase = useFirebase();
 
   useEffect(() => {
     if (!surveys) {
       getSurveys();
     }
   }, [surveys, getSurveys]);
-
-  function deleteSurvey(id) {
-    firebase
-      .firestoreDelete(paths.SURVEYS, id)
-      .then(() => getSurveys())
-      .catch((err) => {
-        console.error(err);
-      });
-  }
 
   return (
     <Card>
@@ -47,13 +35,14 @@ function Surveys({ surveys, getSurveys, loading }) {
             </tr>
           </thead>
           <tbody>
-            {loading ? (
+            {loading && (
               <tr>
                 <td colSpan={4} className="no-padding">
                   <LinearProgress />
                 </td>
               </tr>
-            ) : surveys ? (
+            )}
+            {surveys ? (
               surveys.map((s, index) => (
                 <tr key={s.id}>
                   <td>{s.title}</td>
@@ -102,6 +91,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   getSurveys: actions.surveys.getSurveys,
+  deleteSurvey: actions.surveys.deleteSurvey,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Surveys);
