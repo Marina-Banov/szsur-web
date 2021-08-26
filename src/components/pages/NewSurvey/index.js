@@ -14,6 +14,8 @@ import {
   SurveyFormValidation,
 } from "models";
 import { actions, selectors } from "store";
+import { paths } from "../../../constants";
+import { toBase64 } from "utils/toBase64";
 
 function NewSurvey({ addSurvey, loading }) {
   const history = useHistory();
@@ -23,11 +25,13 @@ function NewSurvey({ addSurvey, loading }) {
 
   async function onSubmit() {
     const body = new Survey(data);
+    body.image = {
+      name: paths.SURVEYS_STORAGE + data.image.name,
+      base64: await toBase64(body.image),
+    };
     addSurvey(body);
 
-    /*    await handlePromise(firebase.uploadFile(body.image, data.image));
-
-        const res2 = await handlePromise(
+    /*  const res2 = await handlePromise(
           firebase.firestoreCreateBulk(
             common.FIRESTORE_QUESTIONS_COLLECTION,
             new Questions(data).questions,

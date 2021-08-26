@@ -2,23 +2,25 @@ import React from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import { useFirebase } from "appFirebase";
 import { CmsPage, CmsEvents } from "components/common";
-import handlePromise from "utils/handlePromise";
 import useForm from "utils/useForm";
 import { Event, EventForm, EventFormFields, EventFormValidation } from "models";
 import { actions, selectors } from "store";
+import { paths } from "../../../constants";
+import { toBase64 } from "utils/toBase64";
 
 function NewEvent({ addEvent, loading }) {
   const history = useHistory();
-  const firebase = useFirebase();
   const { data, handleInputChange, setFormField, handleSubmit, errors } =
     useForm(new EventForm(), EventFormValidation, onSubmit);
 
   async function onSubmit() {
     const body = new Event(data);
+    body.image = {
+      name: paths.EVENTS_STORAGE + data.image.name,
+      base64: await toBase64(body.image),
+    };
     addEvent(body);
-    // await handlePromise(firebase.uploadFile(body.image, data.image));
     history.push("/events");
   }
 

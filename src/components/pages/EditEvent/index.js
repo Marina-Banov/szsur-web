@@ -2,11 +2,12 @@ import React from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { useFirebase } from "appFirebase";
 import { CmsPage, CmsEvents } from "components/common";
 import useForm from "utils/useForm";
 import { Event, EventForm, EventFormFields, EventFormValidation } from "models";
 import { actions, selectors } from "store";
+import { paths } from "../../../constants";
+import { toBase64 } from "utils/toBase64";
 
 function EditEvent({ events, loading, updateEvent }) {
   const history = useHistory();
@@ -14,12 +15,14 @@ function EditEvent({ events, loading, updateEvent }) {
   const event = events?.find((e) => e.id === id) || {};
   const { data, handleInputChange, setFormField, handleSubmit, errors } =
     useForm(new EventForm({ ...event }), EventFormValidation, onSubmit);
-  const firebase = useFirebase();
 
   async function onSubmit() {
     let body = new Event(data);
+    body.image = {
+      name: paths.EVENTS_STORAGE + data.image.name,
+      base64: await toBase64(body.image),
+    };
     updateEvent(event.id, body);
-    // await firebase.uploadFile(body.image, data.image);
     history.push("/events");
   }
 

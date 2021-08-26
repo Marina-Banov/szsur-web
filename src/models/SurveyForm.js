@@ -11,9 +11,10 @@ export default class SurveyForm {
     Object.assign(
       this,
       {
+        active: false,
         title: "",
         description: "",
-        image: "",
+        image: null,
         tags: [],
         questions: [],
         published: false,
@@ -27,6 +28,6 @@ export default class SurveyForm {
 export const SurveyFormValidation = {
   title: { required: true },
   description: { required: true },
-  // image: { required: true },
+  image: { required: true },
   tags: { required: true },
 };

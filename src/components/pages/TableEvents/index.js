@@ -50,16 +50,18 @@ function Events({ events, getEvents, loading, deleteEvent }) {
                 <tr key={e.id}>
                   <td>{e.title}</td>
                   <td>{displayDate(e)}</td>
-                  <td>
+                  <td className="text-right">
                     <Link to={{ pathname: `events/${e.id}` }}>
-                      <Button className="mr-2 mb-1 py-1">{t("edit")}</Button>
+                      <Button className="py-1 icon">
+                        <i className="fa fa-pencil" />
+                      </Button>
                     </Link>
                     <Button
                       color="danger"
-                      className="py-1"
+                      className="ml-2 py-1 icon"
                       onClick={() => deleteEvent(e.id)}
                     >
-                      {t("delete")}
+                      <i className="fa fa-trash" />
                     </Button>
                   </td>
                 </tr>

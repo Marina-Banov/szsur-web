@@ -5,6 +5,7 @@ import {
   Events,
   NewEvent,
   NewSurvey,
+  NewActiveSurvey,
   NotFound,
   Surveys,
 } from "components/pages";
@@ -46,6 +47,11 @@ const mainRoutes = [
     component: NewSurvey,
   },
   {
+    name: "Nova aktivna anketa",
+    path: "/surveys/new/active",
+    component: NewActiveSurvey,
+  },
+  {
     name: "Uredi događaj",
     path: "/events/:id",
     component: EditEvent,
@@ -54,7 +60,7 @@ const mainRoutes = [
     name: "Uredi anketu",
     path: "/surveys/:id",
     component: EditSurvey,
-  }
+  },
 ];
 
 export default mainRoutes;

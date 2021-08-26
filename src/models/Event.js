@@ -1,4 +1,3 @@
-import { paths } from "../constants";
 import { combineDateTime, getISOTime } from "utils/dateUtils";
 
 export default class Event {
@@ -14,7 +13,7 @@ export default class Event {
     this.location = form.location.online
       ? form.location.valueOnline
       : form.location.valueOnsite.place_id;
-    this.image = paths.EVENTS_STORAGE + form.image.name;
+    this.image = form.image;
     this.organisation = form.organisation;
     this.tags = form.tags;
     this.subscribers = [];

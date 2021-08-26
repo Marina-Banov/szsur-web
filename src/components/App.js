@@ -4,7 +4,7 @@ import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { useFirebase } from "appFirebase";
 import { Main } from "components/common";
 import { Login, EmailVerification } from "components/pages";
-import { PrivateRoute } from "PrivateRoute";
+import { PrivateRoute } from "utils/PrivateRoute";
 
 import "bootstrap/scss/bootstrap.scss";
 import "font-awesome/css/font-awesome.min.css";

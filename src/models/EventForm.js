@@ -40,7 +40,7 @@ export default class EventForm {
       {
         title: "",
         description: "",
-        image: "",
+        image: null,
         tags: [],
         endDate: "",
         endTime: "",
@@ -61,7 +61,7 @@ export default class EventForm {
 export const EventFormValidation = {
   title: { required: true },
   description: { required: true },
-  //  image: { required: true },
+  image: { required: true },
   tags: { required: true },
   organisation: { required: true },
   startDate: { required: true },

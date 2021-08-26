@@ -39,8 +39,11 @@
   "surveys": {
     "no_surveys": "Nema anketa.",
     "new_survey": "Nova anketa",
+    "new_active_survey": "Nova aktivna anketa",
     "number_of_answers": "Broj odgovora",
-    "published": "Objavljeno",
+    "published": "Objavljena",
+    "unpublished": "U tijeku",
+    "active": "Aktivna",
     "google_form_url": "URL Google ankete",
     "add_new_survey": "Dodaj novu anketu",
     "question_number": "Pitanje {{number}}",
@@ -57,6 +60,7 @@
   "validation": {
     "required": "Molimo ispunite obavezna polja"
   },
+  "status": "Status",
   "add": "Dodaj",
   "edit": "Uredi",
   "publish": "Objavi",

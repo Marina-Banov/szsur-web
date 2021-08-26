@@ -1,10 +1,9 @@
-import { paths } from "../constants";
-
 export default class Survey {
   constructor(form) {
+    this.active = form.active;
     this.title = form.title;
     this.description = form.description;
-    this.image = paths.SURVEYS_STORAGE + form.image.name;
+    this.image = form.image;
     this.tags = form.tags;
     this.published = form.published;
     this.answersCount = form.answersCount;

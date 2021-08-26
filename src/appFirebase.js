@@ -2,7 +2,6 @@ import { createContext, useContext } from "react";
 import app from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
-import "firebase/storage";
 
 import { common } from "./constants";
 import api from "./api";
@@ -31,7 +30,6 @@ export default class Firebase {
       }
     });
     this.firestore = app.firestore();
-    this.storage = app.storage().ref();
   }
 
   sendLoginLink = (email) => {
@@ -66,14 +64,6 @@ export default class Firebase {
 
   loggedIn = () => {
     return !!this.auth.currentUser;
-  };
-
-  uploadFile = (filepath, file) => {
-    return this.storage.child(filepath).put(file);
-  };
-
-  getImage = (filepath) => {
-    return this.storage.child(filepath).getDownloadURL();
   };
 
   firestoreCreateBulk = (collectionName, payload, doc = this.firestore) => {

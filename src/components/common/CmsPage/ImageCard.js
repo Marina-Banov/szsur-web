@@ -24,12 +24,15 @@ export default function ImageCard({ errors, setFormField, FormFields, form }) {
           onChange={(e) => setFormField(FormFields.image, e.target.files[0])}
         />
         <br />
-        {/* TODO
-        form.image && !form.image.startsWith("https://") && (
-          <img src={URL.createObjectURL(form.image)} alt="" />
-        )*/}
-        {form.image && form.image.startsWith("https://") && (
-          <img src={form.image} alt="" />
+        {form.image && (
+          <img
+            src={
+              typeof form.image == "string"
+                ? form.image
+                : URL.createObjectURL(form.image)
+            }
+            alt=""
+          />
         )}
       </CardBody>
     </Card>
