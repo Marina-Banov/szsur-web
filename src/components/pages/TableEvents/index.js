@@ -29,52 +29,54 @@ function Events({ events, getEvents, loading, deleteEvent }) {
             &nbsp; {t("events.new_event")}
           </Button>
         </Link>
-        <Table hover>
-          <thead>
-            <tr>
-              <th>{t("title")}</th>
-              <th>{t("events.start_time")}</th>
-              <th />
-            </tr>
-          </thead>
-          <tbody>
-            {loading && (
+        <div className="table-wrapper">
+          <Table hover>
+            <thead>
               <tr>
-                <td colSpan={3} className="no-padding">
-                  <LinearProgress />
-                </td>
+                <th>{t("title")}</th>
+                <th>{t("events.start_time")}</th>
+                <th />
               </tr>
-            )}
-            {events ? (
-              events.map((e) => (
-                <tr key={e.id}>
-                  <td>{e.title}</td>
-                  <td>{displayDate(e)}</td>
-                  <td className="text-right">
-                    <Link to={{ pathname: `events/${e.id}` }}>
-                      <Button className="py-1 icon">
-                        <i className="fa fa-pencil" />
-                      </Button>
-                    </Link>
-                    <Button
-                      color="danger"
-                      className="ml-2 py-1 icon"
-                      onClick={() => deleteEvent(e.id)}
-                    >
-                      <i className="fa fa-trash" />
-                    </Button>
+            </thead>
+            <tbody>
+              {loading && (
+                <tr>
+                  <td colSpan={3} className="no-padding">
+                    <LinearProgress />
                   </td>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={3} align="center">
-                  {t("events.no_events")}
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
+              )}
+              {events ? (
+                events.map((e) => (
+                  <tr key={e.id}>
+                    <td>{e.title}</td>
+                    <td>{displayDate(e)}</td>
+                    <td className="text-right">
+                      <Link to={{ pathname: `events/${e.id}` }}>
+                        <Button className="py-1 icon">
+                          <i className="fa fa-pencil" />
+                        </Button>
+                      </Link>
+                      <Button
+                        color="danger"
+                        className="ml-2 py-1 icon"
+                        onClick={() => deleteEvent(e.id)}
+                      >
+                        <i className="fa fa-trash" />
+                      </Button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={3} align="center">
+                    {t("events.no_events")}
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </Table>
+        </div>
       </CardBody>
     </Card>
   );

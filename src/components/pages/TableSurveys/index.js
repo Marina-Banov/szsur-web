@@ -31,75 +31,77 @@ function Surveys({ surveys, getSurveys, loading, deleteSurvey }) {
               &nbsp; {t("surveys.new_active_survey")}
             </Button>
           </Link>
-          <Table hover>
-            <thead>
-              <tr>
-                <th>{t("title")}</th>
-                <th>{t("surveys.number_of_answers")}</th>
-                <th>{t("status")}</th>
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              {loading && (
+          <div className="table-wrapper">
+            <Table hover>
+              <thead>
                 <tr>
-                  <td colSpan={4} className="no-padding">
-                    <LinearProgress />
-                  </td>
+                  <th>{t("title")}</th>
+                  <th>{t("surveys.number_of_answers")}</th>
+                  <th>{t("status")}</th>
+                  <th />
                 </tr>
-              )}
-              {surveys?.length > 0
-                ? surveys.map((s) => (
-                    <tr key={s.id}>
-                      <td>{s.title}</td>
-                      <td>{s.answersCount}</td>
-                      <td>
-                        {t(
-                          s.published
-                            ? "surveys.published"
-                            : s.active
-                            ? "surveys.active"
-                            : "surveys.unpublished"
-                        )}
-                      </td>
-                      <td className="text-right">
-                        {s.published ? (
-                          <Link to={{ pathname: `surveys/${s.id}` }}>
-                            <Button className="py-1 icon">
-                              <i className="fa fa-pencil" />
+              </thead>
+              <tbody>
+                {loading && (
+                  <tr>
+                    <td colSpan={4} className="no-padding">
+                      <LinearProgress />
+                    </td>
+                  </tr>
+                )}
+                {surveys?.length > 0
+                  ? surveys.map((s) => (
+                      <tr key={s.id}>
+                        <td>{s.title}</td>
+                        <td>{s.answersCount}</td>
+                        <td>
+                          {t(
+                            s.published
+                              ? "surveys.published"
+                              : s.active
+                              ? "surveys.active"
+                              : "surveys.unpublished"
+                          )}
+                        </td>
+                        <td className="text-right">
+                          {s.published ? (
+                            <Link to={{ pathname: `surveys/${s.id}` }}>
+                              <Button className="py-1 icon">
+                                <i className="fa fa-pencil" />
+                              </Button>
+                            </Link>
+                          ) : s.active ? (
+                            <Button
+                              className="ml-2 py-1 icon"
+                              onClick={() => setShowModal(s)}
+                            >
+                              <i className="fa fa-eye" />
                             </Button>
-                          </Link>
-                        ) : s.active ? (
+                          ) : (
+                            <Button className="ml-2 py-1 icon">
+                              <i className="fa fa-check" />
+                            </Button>
+                          )}
                           <Button
+                            color="danger"
                             className="ml-2 py-1 icon"
-                            onClick={() => setShowModal(s)}
+                            onClick={() => deleteSurvey(s.id)}
                           >
-                            <i className="fa fa-eye" />
+                            <i className="fa fa-trash" />
                           </Button>
-                        ) : (
-                          <Button className="ml-2 py-1 icon">
-                            <i className="fa fa-check" />
-                          </Button>
-                        )}
-                        <Button
-                          color="danger"
-                          className="ml-2 py-1 icon"
-                          onClick={() => deleteSurvey(s.id)}
-                        >
-                          <i className="fa fa-trash" />
-                        </Button>
-                      </td>
-                    </tr>
-                  ))
-                : surveys && (
-                    <tr>
-                      <td colSpan={4} align="center">
-                        {t("surveys.no_surveys")}
-                      </td>
-                    </tr>
-                  )}
-            </tbody>
-          </Table>
+                        </td>
+                      </tr>
+                    ))
+                  : surveys && (
+                      <tr>
+                        <td colSpan={4} align="center">
+                          {t("surveys.no_surveys")}
+                        </td>
+                      </tr>
+                    )}
+              </tbody>
+            </Table>
+          </div>
         </CardBody>
       </Card>
       <ActiveSurveyModal survey={showModal} close={() => setShowModal(null)} />
