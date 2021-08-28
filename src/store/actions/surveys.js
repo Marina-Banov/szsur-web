@@ -9,6 +9,13 @@ const getSurveys = () =>
     actions.GET_SURVEYS_ERROR,
   ]);
 
+const getSurveyResults = (id) =>
+  api.getSubcollection(buildURLFromParams(paths.SURVEYS_ID_RESULTS, id), id, [
+    actions.GET_SURVEY_RESULTS_REQUEST,
+    actions.GET_SURVEY_RESULTS_SUCCESS,
+    actions.GET_SURVEY_RESULTS_ERROR,
+  ]);
+
 const addSurvey = (body) =>
   api.add(paths.SURVEYS, body, [
     actions.POST_SURVEY_REQUEST,
@@ -32,6 +39,7 @@ const deleteSurvey = (id) =>
 
 export default {
   getSurveys,
+  getSurveyResults,
   addSurvey,
   updateSurvey,
   deleteSurvey,

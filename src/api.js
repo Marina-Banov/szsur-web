@@ -56,6 +56,29 @@ const get =
     }
   };
 
+const getSubcollection =
+  (path, id, [REQUEST, SUCCESS, ERROR]) =>
+  async (dispatch) => {
+    await dispatch({
+      type: REQUEST,
+    });
+    try {
+      const response = await request
+        .get(buildURL(process.env.REACT_APP_API_PATH, path))
+        .set("Authorization", "Bearer " + authToken);
+      return dispatch({
+        type: SUCCESS,
+        data: response.body,
+        id,
+      });
+    } catch (error) {
+      return dispatch({
+        type: ERROR,
+        error,
+      });
+    }
+  };
+
 const update =
   (path, body, [REQUEST, SUCCESS, ERROR]) =>
   async (dispatch) => {
@@ -101,4 +124,4 @@ const remove =
     }
   };
 
-export default { setToken, add, get, update, remove };
+export default { setToken, add, get, getSubcollection, update, remove };

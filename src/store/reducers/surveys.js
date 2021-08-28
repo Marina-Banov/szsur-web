@@ -20,6 +20,24 @@ const actionMap = {
     data: [],
     isLoading: false,
   }),
+  [actions.GET_SURVEY_RESULTS_REQUEST]: (state, _) => ({
+    ...state,
+    isLoading: true,
+  }),
+  [actions.GET_SURVEY_RESULTS_SUCCESS]: (state, action) => {
+    const index = state.data.findIndex((e) => e.id === action.id);
+    if (index >= 0) {
+      state.data[index].results = action.data;
+    }
+    return {
+      ...state,
+      isLoading: false,
+    };
+  },
+  [actions.GET_SURVEY_RESULTS_ERROR]: (state, _) => ({
+    ...state,
+    isLoading: false,
+  }),
   [actions.UPDATE_SURVEY_REQUEST]: (state, _) => ({
     ...state,
     isLoading: true,

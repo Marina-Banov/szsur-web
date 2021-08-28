@@ -5,5 +5,6 @@ export default {
   EVENTS_STORAGE: "event_images/",
   SURVEYS: "/surveys",
   SURVEYS_ID: "/surveys/:id",
+  SURVEYS_ID_RESULTS: "/surveys/:id/results",
   SURVEYS_STORAGE: "survey_images/",
 };
