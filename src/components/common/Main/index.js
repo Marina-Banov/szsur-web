@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Switch, Route, Link, useLocation, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
 import {
   Header,
@@ -15,14 +16,33 @@ import appRoutes from "appRoutes";
 import handleKeyAccessibility, {
   handleClickAccessibility,
 } from "utils/handleTabAccessibility";
+import { actions, selectors } from "store";
 
 const MOBILE_SIZE = 992;
 
-export default function Home() {
+function Main({ events, getEvents, surveys, getSurveys, tags, getTags }) {
   const location = useLocation();
   const prevLocation = usePrevious(location);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= MOBILE_SIZE);
+
+  useEffect(() => {
+    if (!events) {
+      getEvents();
+    }
+  }, [events, getEvents]);
+
+  useEffect(() => {
+    if (!surveys) {
+      getSurveys();
+    }
+  }, [surveys, getSurveys]);
+
+  useEffect(() => {
+    if (!tags) {
+      getTags();
+    }
+  }, [getTags, tags]);
 
   function handleResize() {
     if (window.innerWidth <= MOBILE_SIZE) {
@@ -111,3 +131,17 @@ export default function Home() {
     </PageLoaderProvider>
   );
 }
+
+const mapStateToProps = (state) => ({
+  events: selectors.events.getEvents(state),
+  surveys: selectors.surveys.getSurveys(state),
+  tags: selectors.tags.getTags(state),
+});
+
+const mapDispatchToProps = {
+  getEvents: actions.events.getEvents,
+  getSurveys: actions.surveys.getSurveys,
+  getTags: actions.tags.getTags,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

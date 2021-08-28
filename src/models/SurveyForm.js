@@ -7,12 +7,21 @@ export const SurveyFormFields = {
 };
 
 export default class SurveyForm {
-  constructor() {
-    this.title = "";
-    this.description = "";
-    this.image = "";
-    this.tags = [];
-    this.questions = [];
+  constructor(survey = {}) {
+    Object.assign(
+      this,
+      {
+        active: false,
+        title: "",
+        description: "",
+        image: null,
+        tags: [],
+        questions: [],
+        published: false,
+        answersCount: 0,
+      },
+      survey
+    );
   }
 }
 

@@ -1,13 +1,12 @@
-import constants from "appConstants";
-
 export default class Survey {
   constructor(form) {
+    this.active = form.active;
     this.title = form.title;
     this.description = form.description;
-    this.image = constants.STORAGE_SURVEYS_PATH + form.image.name;
+    this.image = form.image;
     this.tags = form.tags;
-    this.published = false;
-    this.subscribers = [];
+    this.published = form.published;
+    this.answersCount = form.answersCount;
   }
 }
 

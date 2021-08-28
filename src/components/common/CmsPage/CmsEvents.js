@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { usePlacesWidget } from "react-google-autocomplete";
 import { CardBody, FormGroup, Label, Input, Row, Col, Card } from "reactstrap";
 import { useTranslation } from "react-i18next";
@@ -14,7 +14,7 @@ export default function CmsEvents({
 }) {
   const { t } = useTranslation();
   const { ref } = usePlacesWidget({
-    apiKey: process.env.REACT_APP_API_KEY,
+    apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     onPlaceSelected: (place) => {
       setFormField(FormFields.location, {
         online: false,
@@ -27,6 +27,40 @@ export default function CmsEvents({
       componentRestrictions: { country: "hr" },
     },
   });
+
+  useEffect(() => {
+    if (
+      typeof form.location.valueOnsite !== "string" ||
+      form.location.valueOnsite === ""
+    ) {
+      return;
+    }
+
+    const placesService = new window.google.maps.places.PlacesService(
+      document.createElement("div")
+    );
+
+    placesService?.getDetails(
+      {
+        placeId: form.location.valueOnsite,
+        fields: [
+          "address_components",
+          "formatted_address",
+          "geometry",
+          "place_id",
+          "name",
+        ],
+      },
+      (valueOnsite) => {
+        ref.current.value = valueOnsite.name;
+        setFormField(FormFields.location, {
+          online: false,
+          valueOnline: "",
+          valueOnsite,
+        });
+      }
+    );
+  }, [form.location.valueOnsite, ref, setFormField]);
 
   function toggleOnline(e) {
     setFormField(FormFields.location, {
@@ -59,7 +93,6 @@ export default function CmsEvents({
               </Label>
               <DatePicker
                 id="startDate"
-                minDate={new Date().toString()}
                 invalid={errors.includes(FormFields.startDate)}
                 className="mb-2"
                 onChange={(v) => setFormField(FormFields.startDate, v)}
@@ -67,13 +100,13 @@ export default function CmsEvents({
               />
             </FormGroup>
             <FormGroup>
+              <Label for={FormFields.startTime}>{t("events.start_time")}</Label>
               <TimePicker
-                label={t("events.start_time")}
-                order={0}
+                id={FormFields.startTime}
+                name={FormFields.startTime}
                 invalid={errors.includes(FormFields.startTime)}
-                onChange={(v) =>
-                  setFormField(FormFields.startTime, v.target.value)
-                }
+                initialValue={form.startDate}
+                onChange={(value) => setFormField(FormFields.startTime, value)}
               />
             </FormGroup>
           </Col>
@@ -95,13 +128,13 @@ export default function CmsEvents({
               />
             </FormGroup>
             <FormGroup>
+              <Label for={FormFields.endTime}>{t("events.end_time")}</Label>
               <TimePicker
-                label={t("events.end_time")}
-                order={1}
+                id={FormFields.endTime}
+                name={FormFields.endTime}
                 invalid={errors.includes(FormFields.endTime)}
-                onChange={(v) =>
-                  setFormField(FormFields.endTime, v.target.value)
-                }
+                initialValue={form.endDate}
+                onChange={(value) => setFormField(FormFields.endTime, value)}
               />
             </FormGroup>
           </Col>
@@ -116,6 +149,7 @@ export default function CmsEvents({
                     name={FormFields.locationIsOnline}
                     value="true"
                     onChange={toggleOnline}
+                    checked={form.location.online}
                   />
                   <i>Online</i> {t("events.event")}
                 </Label>
@@ -151,6 +185,7 @@ export default function CmsEvents({
                     name={FormFields.locationIsOnline}
                     value="false"
                     onChange={toggleOnline}
+                    checked={form.location.online === false}
                   />
                   <i>Onsite</i> {t("events.event")}
                 </Label>

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Button, Col, FormGroup, Input, Label, Row } from "reactstrap";
 import { Divider } from "@material-ui/core";
 
-import constants from "appConstants";
+import { common } from "../../../constants";
 
 // TODO validation is hard
 export default function NewQuestion({
@@ -16,12 +16,12 @@ export default function NewQuestion({
 
   function setType(event) {
     let newQ;
-    if (event.target.value === constants.SURVEY_QUESTION_TYPE_TEXT) {
+    if (event.target.value === common.SURVEY_QUESTION_TYPE_TEXT) {
       newQ = {
         question: question.question,
         type: event.target.value,
       };
-    } else if (question.type === constants.SURVEY_QUESTION_TYPE_TEXT) {
+    } else if (question.type === common.SURVEY_QUESTION_TYPE_TEXT) {
       newQ = { ...question, type: event.target.value, choices: ["", ""] };
     } else {
       newQ = { ...question, type: event.target.value };
@@ -94,13 +94,13 @@ export default function NewQuestion({
               value={question.type}
               onChange={setType}
             >
-              <option value={constants.SURVEY_QUESTION_TYPE_TEXT}>
+              <option value={common.SURVEY_QUESTION_TYPE_TEXT}>
                 {t("surveys.input_text")}
               </option>
-              <option value={constants.SURVEY_QUESTION_TYPE_MULTIPLE}>
+              <option value={common.SURVEY_QUESTION_TYPE_MULTIPLE}>
                 {t("surveys.multiple_choice")}
               </option>
-              <option value={constants.SURVEY_QUESTION_TYPE_SINGLE}>
+              <option value={common.SURVEY_QUESTION_TYPE_SINGLE}>
                 {t("surveys.single_choice")}
               </option>
             </Input>
@@ -113,7 +113,7 @@ export default function NewQuestion({
           key={index}
           className={
             (index > 1 ? "flex_center_center input-with-button " : "") +
-            (question.type === constants.SURVEY_QUESTION_TYPE_MULTIPLE
+            (question.type === common.SURVEY_QUESTION_TYPE_MULTIPLE
               ? "multiple"
               : "single")
           }
@@ -137,7 +137,7 @@ export default function NewQuestion({
           className="mb-3"
           color="success"
           onClick={addChoice}
-          disabled={question.choices.length === constants.SURVEY_MAX_CHOICES}
+          disabled={question.choices.length === common.SURVEY_MAX_CHOICES}
         >
           <i className="fa fa-plus" />
           &nbsp; {t("surveys.new_choice")}

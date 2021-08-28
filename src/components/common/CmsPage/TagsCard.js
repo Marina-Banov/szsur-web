@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
 import { CircularProgress } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import {
@@ -11,33 +12,19 @@ import {
   Label,
 } from "reactstrap";
 
-import constants from "appConstants";
-import { useFirebase } from "appFirebase";
+import { actions, selectors } from "store";
 
-export default function TagsCard({ errors, setFormField, FormFields, form }) {
+function TagsCard({
+  tags,
+  updateTags,
+  loading,
+  errors,
+  setFormField,
+  FormFields,
+  form,
+}) {
   const { t } = useTranslation();
-  const firebase = useFirebase();
-  const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const getTags = useCallback(() => {
-    firebase
-      .firestoreRead(constants.FIRESTORE_TAGS_PATH)
-      .then((res) => {
-        setLoading(false);
-        setTags(res.body.values);
-      })
-      .catch((err) => {
-        setLoading(false);
-        console.error(err);
-      });
-  }, [firebase]);
-
-  useEffect(() => {
-    setLoading(true);
-    getTags();
-  }, [getTags]);
 
   function handleTagClick(tag) {
     const t = [...form.tags];
@@ -54,19 +41,8 @@ export default function TagsCard({ errors, setFormField, FormFields, form }) {
     if (tagInput === "") {
       return;
     }
-    setLoading(true);
-    const t = [...tags];
-    t.push(tagInput);
-    firebase
-      .firestoreUpdate(constants.FIRESTORE_TAGS_PATH, { values: t })
-      .then((res) => {
-        setTagInput("");
-        getTags();
-      })
-      .catch((err) => {
-        setLoading(false);
-        console.error(err);
-      });
+    updateTags({ values: [...tags, tagInput] });
+    setTagInput("");
   }
 
   return (
@@ -75,11 +51,13 @@ export default function TagsCard({ errors, setFormField, FormFields, form }) {
     >
       <CardHeader>{t("tags.tags")}</CardHeader>
       <CardBody>
-        {loading ? (
+        {loading && (
           <div className="flex_center_center">
             <CircularProgress />
           </div>
-        ) : (
+        )}
+        {tags &&
+          !loading &&
           Object.values(tags).map((tag) => (
             <Button
               color={form.tags.includes(tag) ? "primary" : "secondary"}
@@ -89,8 +67,7 @@ export default function TagsCard({ errors, setFormField, FormFields, form }) {
             >
               {tag}
             </Button>
-          ))
-        )}
+          ))}
         <FormGroup className="mt-3">
           <Label for="tag">{t("tags.add_new_tag")}</Label>
           <div className="flex_center_center input-with-button">
@@ -111,3 +88,14 @@ export default function TagsCard({ errors, setFormField, FormFields, form }) {
     </Card>
   );
 }
+
+const mapStateToProps = (state) => ({
+  tags: selectors.tags.getTags(state),
+  loading: selectors.tags.getIsLoading(state),
+});
+
+const mapDispatchToProps = {
+  updateTags: actions.tags.updateTags,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TagsCard);

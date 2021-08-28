@@ -32,13 +32,18 @@
     "end_time": "Vrijeme završetka",
     "online_address": "URL događaja",
     "onsite_address": "Adresa",
-    "organisation": "Organizator"
+    "organisation": "Organizator",
+    "hours": "Sati",
+    "minutes": "Minute"
   },
   "surveys": {
     "no_surveys": "Nema anketa.",
     "new_survey": "Nova anketa",
+    "new_active_survey": "Nova aktivna anketa",
     "number_of_answers": "Broj odgovora",
-    "published": "Objavljeno",
+    "published": "Objavljena",
+    "unpublished": "U tijeku",
+    "active": "Aktivna",
     "google_form_url": "URL Google ankete",
     "add_new_survey": "Dodaj novu anketu",
     "question_number": "Pitanje {{number}}",
@@ -55,10 +60,12 @@
   "validation": {
     "required": "Molimo ispunite obavezna polja"
   },
+  "status": "Status",
   "add": "Dodaj",
   "edit": "Uredi",
   "publish": "Objavi",
   "delete": "Obriši",
+  "save_changes": "Spremi promjene",
   "sztfr": "Studentski zbor Tehničkog fakulteta",
   "home_p1": "Ovo je mjesto za upravljanje sadržajem na mobilnoj aplikaciji SZTFR. Rezervirano za članove SZ-a.",
   "home_p2": "Dodaj, uredi ili obriši događaje koje organizira Studentski zbor ili postavi i obradi ankete svim studentima Tehničkog fakulteta."

@@ -2,11 +2,9 @@ import { createContext, useContext } from "react";
 import app from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
-import "firebase/storage";
-import request from "superagent";
 
-import constants from "appConstants";
-import { buildURL } from "utils/buildURL";
+import { common } from "./constants";
+import api from "./api";
 
 export const FirebaseContext = createContext({});
 export const useFirebase = () => useContext(FirebaseContext);
@@ -26,15 +24,12 @@ export default class Firebase {
     this.auth = app.auth();
     this.auth.onAuthStateChanged(() => {
       if (!!this.auth.currentUser) {
-        this.auth.currentUser
-          .getIdToken(false)
-          .then((token) => (this.userToken = token));
-      } else {
-        this.userToken = "";
+        this.auth.currentUser.getIdToken(false).then((token) => {
+          api.setToken(token);
+        });
       }
     });
     this.firestore = app.firestore();
-    this.storage = app.storage();
   }
 
   sendLoginLink = (email) => {
@@ -46,14 +41,14 @@ export default class Firebase {
 
   verifyEmailLink = () => {
     const email = window.localStorage.getItem(
-      constants.LOCAL_STORAGE_LOG_IN_EMAIL
+      common.LOCAL_STORAGE_LOG_IN_EMAIL
     );
     return this.auth.isSignInWithEmailLink(window.location.href) && !!email;
   };
 
   logInWithEmailLink = () => {
     const email = window.localStorage.getItem(
-      constants.LOCAL_STORAGE_LOG_IN_EMAIL
+      common.LOCAL_STORAGE_LOG_IN_EMAIL
     );
     return this.auth.signInWithEmailLink(email, window.location.href);
   };
@@ -71,16 +66,6 @@ export default class Firebase {
     return !!this.auth.currentUser;
   };
 
-  uploadFile = (filepath, file) => {
-    return this.storage.ref().child(filepath).put(file);
-  };
-
-  firestoreCreate = (collectionName, payload) => {
-    return this.firestore
-      .collection(collectionName)
-      .add(Object.assign({}, payload));
-  };
-
   firestoreCreateBulk = (collectionName, payload, doc = this.firestore) => {
     const batch = this.firestore.batch();
     payload.forEach((p) => {
@@ -88,20 +73,5 @@ export default class Firebase {
       batch.set(docRef, Object.assign({}, p));
     });
     return batch.commit();
-  };
-
-  firestoreRead = (path) => {
-    return request.get(buildURL(process.env.REACT_APP_API_PATH, path));
-  };
-
-  firestoreUpdate = (path, body) => {
-    return request
-      .put(buildURL(process.env.REACT_APP_API_PATH, path))
-      .set("Authorization", "Bearer " + this.userToken)
-      .send(body);
-  };
-
-  firestoreDelete = (collectionName, id) => {
-    return this.firestore.collection(collectionName).doc(id).delete();
   };
 }

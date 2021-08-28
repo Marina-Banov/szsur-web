@@ -1,4 +1,5 @@
 import { combineDateTime, getISOTime, validDateRange } from "utils/dateUtils";
+import moment from "moment";
 
 export const EventFormFields = {
   title: "title",
@@ -17,21 +18,43 @@ export const EventFormFields = {
 };
 
 export default class EventForm {
-  constructor() {
-    this.title = "";
-    this.description = "";
-    this.image = "";
-    this.tags = [];
-    this.endDate = "";
-    this.endTime = "";
-    this.location = {
-      online: null,
-      valueOnline: "",
-      valueOnsite: "",
-    };
-    this.organisation = "";
-    this.startDate = "";
-    this.startTime = "";
+  constructor(event = {}) {
+    if (event.id) {
+      event.location = {
+        online: event.online,
+        valueOnline: event.online ? event.location : "",
+        valueOnsite: event.online ? "" : event.location,
+      };
+
+      event.startDate = event.startTime;
+      event.startTime = moment(event.startTime).format("HH:mm");
+      event.endDate = event.endTime;
+      event.endTime = moment(event.endTime).format("HH:mm");
+
+      delete event.online;
+      delete event.subscribers;
+    }
+
+    Object.assign(
+      this,
+      {
+        title: "",
+        description: "",
+        image: null,
+        tags: [],
+        endDate: "",
+        endTime: "",
+        location: {
+          online: null,
+          valueOnline: "",
+          valueOnsite: "",
+        },
+        organisation: "",
+        startDate: "",
+        startTime: "",
+      },
+      event
+    );
   }
 }
 

@@ -1,3 +1,5 @@
+import moment from "moment";
+
 /**
  * Combines date and time into one variable
  * @param date {string}
@@ -18,7 +20,7 @@ export function combineDateTime(date, time) {
     t.getMinutes(),
     0
   );
-  return res.toISOString();
+  return moment(res).format("YYYY-MM-DDTHH:mm:ss");
 }
 
 /**
