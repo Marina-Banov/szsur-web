@@ -3,6 +3,7 @@ export { default as CmsPage } from "./CmsPage";
 export { default as CmsEvents } from "./CmsPage/CmsEvents";
 export { default as CmsSurveys } from "./CmsPage/CmsSurveys";
 export { default as DatePicker } from "./DatePicker";
+export { default as DeleteModal } from "./DeleteModal";
 export { default as ExportButton } from "./ExportButton";
 export { default as Header } from "./Header";
 export { default as Loader } from "./Loader";

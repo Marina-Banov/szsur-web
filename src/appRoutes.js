@@ -63,7 +63,7 @@ const mainRoutes = [
     component: EditSurvey,
   },
   {
-    name: "Objavi anketu",
+    name: "Objavi rezultate ankete",
     path: "/surveys/publish/:id",
     component: PublishSurvey,
   },

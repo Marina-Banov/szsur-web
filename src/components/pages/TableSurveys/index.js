@@ -7,10 +7,12 @@ import { Link } from "react-router-dom";
 
 import { actions, selectors } from "store";
 import ActiveSurveyModal from "../ActiveSurveyModal";
+import { DeleteModal } from "components/common";
 
 function Surveys({ surveys, getSurveys, loading, deleteSurvey }) {
   const { t } = useTranslation();
-  const [showModal, setShowModal] = useState(null);
+  const [showActiveModal, setShowActiveModal] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(null);
 
   return (
     <>
@@ -73,7 +75,7 @@ function Surveys({ surveys, getSurveys, loading, deleteSurvey }) {
                           ) : s.active ? (
                             <Button
                               className="ml-2 py-1 icon"
-                              onClick={() => setShowModal(s)}
+                              onClick={() => setShowActiveModal(s)}
                             >
                               <i className="fa fa-eye" />
                             </Button>
@@ -87,7 +89,7 @@ function Surveys({ surveys, getSurveys, loading, deleteSurvey }) {
                           <Button
                             color="danger"
                             className="ml-2 py-1 icon"
-                            onClick={() => deleteSurvey(s.id)}
+                            onClick={() => setShowDeleteModal(s)}
                           >
                             <i className="fa fa-trash" />
                           </Button>
@@ -106,7 +108,17 @@ function Surveys({ surveys, getSurveys, loading, deleteSurvey }) {
           </div>
         </CardBody>
       </Card>
-      <ActiveSurveyModal survey={showModal} close={() => setShowModal(null)} />
+      <ActiveSurveyModal
+        survey={showActiveModal}
+        close={() => setShowActiveModal(null)}
+      />
+      <DeleteModal
+        target={showDeleteModal}
+        close={() => setShowDeleteModal(null)}
+        onDelete={(s) => deleteSurvey(s.id)}
+        title={t("surveys.delete")}
+        text={t("surveys.delete_sure", { title: showDeleteModal?.title })}
+      />
     </>
   );
 }

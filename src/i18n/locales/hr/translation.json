@@ -34,7 +34,9 @@
     "onsite_address": "Adresa",
     "organisation": "Organizator",
     "hours": "Sati",
-    "minutes": "Minute"
+    "minutes": "Minute",
+    "delete": "Obriši događaj",
+    "delete_sure": "Sigurno želiš obrisati događaj \"{{title}}\"?"
   },
   "surveys": {
     "no_surveys": "Nema anketa.",
@@ -57,7 +59,9 @@
     "new_choice": "Novi izbor",
     "choice_number": "Izbor {{number}}",
     "results_filename": "SZSUR_Rezultati_ankete",
-    "export_results": "Preuzmi rezultate ankete"
+    "export_results": "Preuzmi rezultate ankete",
+    "delete": "Obriši anketu",
+    "delete_sure": "Sigurno želiš obrisati anketu \"{{title}}\"?"
   },
   "validation": {
     "required": "Molimo ispunite obavezna polja"
