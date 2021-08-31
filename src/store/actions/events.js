@@ -1,6 +1,6 @@
 import { actions, paths } from "../../constants";
 import api from "api";
-import { buildURLFromParams } from "utils/buildURL";
+import { buildURLFromParams } from "utils";
 
 const getEvents = () =>
   api.get(paths.EVENTS, [

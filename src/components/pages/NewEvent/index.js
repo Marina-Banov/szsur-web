@@ -3,11 +3,10 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { CmsPage, CmsEvents } from "components/common";
-import useForm from "utils/useForm";
+import { toBase64, useForm } from "utils";
 import { Event, EventForm, EventFormFields, EventFormValidation } from "models";
 import { actions, selectors } from "store";
 import { paths } from "../../../constants";
-import { toBase64 } from "utils/toBase64";
 
 function NewEvent({ addEvent, loading }) {
   const history = useHistory();

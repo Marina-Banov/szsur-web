@@ -1,4 +1,4 @@
-const handleKeyAccessibility = (e) => {
+export const handleKeyAccessibility = (e) => {
   const TABKEYCODE = 9;
   const ENTERKEYCODE = 13;
   if (e.keyCode === TABKEYCODE || ENTERKEYCODE) {
@@ -12,5 +12,3 @@ export const handleClickAccessibility = (e) => {
     document.querySelector("body").classList.remove("keyboardActive");
   }
 };
-
-export default handleKeyAccessibility;

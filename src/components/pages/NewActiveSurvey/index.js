@@ -15,8 +15,7 @@ import {
   Row,
 } from "reactstrap";
 
-import { toBase64 } from "utils/toBase64";
-import useForm from "utils/useForm";
+import { toBase64, useForm } from "utils";
 import {
   ActiveSurvey,
   ActiveSurveyForm,

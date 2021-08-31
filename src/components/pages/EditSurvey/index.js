@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 
 import { CmsPage, CmsSurveys } from "components/common";
-import useForm from "utils/useForm";
+import { toBase64, useForm } from "utils";
 import {
   Survey,
   SurveyForm,
@@ -12,7 +12,6 @@ import {
 } from "models";
 import { actions, selectors } from "store";
 import { paths } from "../../../constants";
-import { toBase64 } from "utils/toBase64";
 
 function EditSurvey({ updateSurvey, surveys, loading }) {
   const history = useHistory();

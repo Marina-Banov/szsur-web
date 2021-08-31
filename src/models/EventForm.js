@@ -1,5 +1,6 @@
-import { combineDateTime, getISOTime, validDateRange } from "utils/dateUtils";
 import moment from "moment";
+
+import { combineDateTime, getISOTime, validDateRange } from "utils";
 
 export const EventFormFields = {
   title: "title",

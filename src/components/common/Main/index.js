@@ -11,11 +11,12 @@ import {
   PageAlertProvider,
 } from "components/common";
 import { NotFound } from "components/pages";
-import usePrevious from "utils/usePrevious";
-import appRoutes from "appRoutes";
-import handleKeyAccessibility, {
+import {
   handleClickAccessibility,
-} from "utils/handleTabAccessibility";
+  handleKeyAccessibility,
+  usePrevious,
+} from "utils";
+import appRoutes from "appRoutes";
 import { actions, selectors } from "store";
 
 const MOBILE_SIZE = 992;

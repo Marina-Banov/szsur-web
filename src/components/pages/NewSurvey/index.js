@@ -4,8 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import { useFirebase } from "appFirebase";
 import { CmsPage, CmsSurveys } from "components/common";
-import handlePromise from "utils/handlePromise";
-import useForm from "utils/useForm";
+import { handlePromise, toBase64, useForm } from "utils";
 import {
   Survey,
   Questions,
@@ -15,7 +14,6 @@ import {
 } from "models";
 import { actions, selectors } from "store";
 import { paths } from "../../../constants";
-import { toBase64 } from "utils/toBase64";
 
 function NewSurvey({ addSurvey, loading }) {
   const history = useHistory();

@@ -1,4 +1,4 @@
-import { combineDateTime, getISOTime } from "utils/dateUtils";
+import { combineDateTime, getISOTime } from "utils";
 
 export default class Event {
   constructor(form) {

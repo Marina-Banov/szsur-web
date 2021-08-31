@@ -5,7 +5,7 @@ import { PromiseResult } from "models";
  * @param promise
  * @returns {Promise<PromiseResult>}
  */
-export default async function handlePromise(promise) {
+export async function handlePromise(promise) {
   try {
     const data = await promise;
     return new PromiseResult(data, null);
