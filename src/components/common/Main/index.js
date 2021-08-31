@@ -115,15 +115,9 @@ function Main({ events, getEvents, surveys, getSurveys, tags, getTags }) {
           </div>
 
           <footer className="app-footer">
-            <span>Copyright © 2019 Nice Dash. All rights reserved.</span>
-            <span>
+            <span>Copyright © 2021 Nice Dash. All rights reserved.</span>
+            <span className="ml-1">
               <Link to="">Terms</Link> | <Link to="">Privacy Policy</Link>
-            </span>
-            <span className="ml-auto hidden-xs">
-              Made with{" "}
-              <span role="img" aria-label="taco">
-                🌮
-              </span>
             </span>
           </footer>
         </div>

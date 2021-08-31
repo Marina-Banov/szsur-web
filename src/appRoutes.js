@@ -3,10 +3,11 @@ import {
   EditEvent,
   EditSurvey,
   Events,
+  NewActiveSurvey,
   NewEvent,
   NewSurvey,
-  NewActiveSurvey,
   NotFound,
+  PublishSurvey,
   Surveys,
 } from "components/pages";
 
@@ -60,6 +61,11 @@ const mainRoutes = [
     name: "Uredi anketu",
     path: "/surveys/:id",
     component: EditSurvey,
+  },
+  {
+    name: "Objavi anketu",
+    path: "/surveys/publish/:id",
+    component: PublishSurvey,
   },
 ];
 

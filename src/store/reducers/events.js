@@ -31,6 +31,7 @@ const actionMap = {
     }
     return {
       ...state,
+      data: [...state.data],
       isLoading: false,
     };
   },
@@ -49,6 +50,7 @@ const actionMap = {
     }
     return {
       ...state,
+      data: [...state.data],
       isLoading: false,
     };
   },
@@ -61,11 +63,10 @@ const actionMap = {
     isLoading: true,
   }),
   [actions.POST_EVENT_SUCCESS]: (state, action) => {
-    const data = [...state.data];
-    data.push(action.data);
+    state.data.push(action.data);
     return {
       ...state,
-      data,
+      data: [...state.data],
       isLoading: false,
     };
   },

@@ -6,5 +6,6 @@ export default {
   SURVEYS: "/surveys",
   SURVEYS_ID: "/surveys/:id",
   SURVEYS_ID_RESULTS: "/surveys/:id/results",
+  SURVEYS_ID_QUESTIONS: "/surveys/:id/questions",
   SURVEYS_STORAGE: "survey_images/",
 };

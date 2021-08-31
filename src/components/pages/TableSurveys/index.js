@@ -78,9 +78,11 @@ function Surveys({ surveys, getSurveys, loading, deleteSurvey }) {
                               <i className="fa fa-eye" />
                             </Button>
                           ) : (
-                            <Button className="ml-2 py-1 icon">
-                              <i className="fa fa-check" />
-                            </Button>
+                            <Link to={{ pathname: `/surveys/publish/${s.id}` }}>
+                              <Button className="ml-2 py-1 icon">
+                                <i className="fa fa-check" />
+                              </Button>
+                            </Link>
                           )}
                           <Button
                             color="danger"

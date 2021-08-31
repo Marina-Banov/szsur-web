@@ -31,10 +31,30 @@ const actionMap = {
     }
     return {
       ...state,
+      data: [...state.data],
       isLoading: false,
     };
   },
   [actions.GET_SURVEY_RESULTS_ERROR]: (state, _) => ({
+    ...state,
+    isLoading: false,
+  }),
+  [actions.GET_SURVEY_QUESTIONS_REQUEST]: (state, _) => ({
+    ...state,
+    isLoading: true,
+  }),
+  [actions.GET_SURVEY_QUESTIONS_SUCCESS]: (state, action) => {
+    const index = state.data.findIndex((e) => e.id === action.id);
+    if (index >= 0) {
+      state.data[index].questions = action.data;
+    }
+    return {
+      ...state,
+      data: [...state.data],
+      isLoading: false,
+    };
+  },
+  [actions.GET_SURVEY_QUESTIONS_ERROR]: (state, _) => ({
     ...state,
     isLoading: false,
   }),
@@ -49,6 +69,7 @@ const actionMap = {
     }
     return {
       ...state,
+      data: [...state.data],
       isLoading: false,
     };
   },
@@ -67,6 +88,7 @@ const actionMap = {
     }
     return {
       ...state,
+      data: [...state.data],
       isLoading: false,
     };
   },
@@ -79,11 +101,10 @@ const actionMap = {
     isLoading: true,
   }),
   [actions.POST_SURVEY_SUCCESS]: (state, action) => {
-    const data = [...state.data];
-    data.push(action.data);
+    state.data.push(action.data);
     return {
       ...state,
-      data,
+      data: [...state.data],
       isLoading: false,
     };
   },
