@@ -2,20 +2,19 @@ import { combineDateTime, getISOTime } from "utils";
 
 export default class Event {
   constructor(form) {
-    this.title = form.title;
     this.description = form.description;
+    this.endTime = combineDateTime(form.endDate, getISOTime(form.endTime));
+    this.image = form.image;
+    this.location = form.location.online
+      ? form.location.valueOnline
+      : form.location.valueOnsite.place_id;
+    this.online = form.location.online;
+    this.organisation = form.organisation;
     this.startTime = combineDateTime(
       form.startDate,
       getISOTime(form.startTime)
     );
-    this.endTime = combineDateTime(form.endDate, getISOTime(form.endTime));
-    this.online = form.location.online;
-    this.location = form.location.online
-      ? form.location.valueOnline
-      : form.location.valueOnsite.place_id;
-    this.image = form.image;
-    this.organisation = form.organisation;
     this.tags = form.tags;
-    this.subscribers = [];
+    this.title = form.title;
   }
 }

@@ -1,12 +1,13 @@
 export default class Survey {
   constructor(form) {
     this.active = form.active;
-    this.title = form.title;
+    this.answersCount = form.answersCount;
     this.description = form.description;
     this.image = form.image;
-    this.tags = form.tags;
+    this.organisation = form.organisation;
     this.published = form.published;
-    this.answersCount = form.answersCount;
+    this.tags = form.tags;
+    this.title = form.title;
   }
 }
 

@@ -27,11 +27,15 @@ import TagsCard from "components/common/CmsPage/TagsCard";
 import ImageCard from "components/common/CmsPage/ImageCard";
 import { common, paths } from "../../../constants";
 
-function NewSurvey({ addSurvey, loading }) {
+function NewSurvey({ addSurvey, loading, organisation }) {
   const history = useHistory();
   const { t } = useTranslation();
   const { data, handleInputChange, setFormField, handleSubmit, errors } =
-    useForm(new ActiveSurveyForm(), ActiveSurveyFormValidation, onSubmit);
+    useForm(
+      new ActiveSurveyForm({ organisation }),
+      ActiveSurveyFormValidation,
+      onSubmit
+    );
 
   async function onSubmit() {
     const body = new ActiveSurvey(data);
@@ -149,6 +153,7 @@ function NewSurvey({ addSurvey, loading }) {
 
 const mapStateToProps = (state) => ({
   loading: selectors.surveys.getIsLoading(state),
+  organisation: selectors.user.getOrganization(state),
 });
 
 const mapDispatchToProps = {

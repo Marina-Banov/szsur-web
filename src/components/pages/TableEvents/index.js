@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { actions, selectors } from "store";
 import { DeleteModal } from "components/common";
 
-function Events({ events, getEvents, loading, deleteEvent }) {
+function Events({ events, getEvents, loading, deleteEvent, organization }) {
   const { t } = useTranslation();
   const [showDeleteModal, setShowDeleteModal] = useState(null);
 
@@ -23,7 +23,7 @@ function Events({ events, getEvents, loading, deleteEvent }) {
     <>
       <Card>
         <CardBody>
-          <Button className="m-b m-r" onClick={getEvents}>
+          <Button className="m-b m-r" onClick={() => getEvents(organization)}>
             <i className="fa fa-refresh" />
           </Button>
           <Link to="/events/new">
@@ -96,6 +96,7 @@ function Events({ events, getEvents, loading, deleteEvent }) {
 const mapStateToProps = (state) => ({
   events: selectors.events.getEvents(state),
   loading: selectors.events.getIsLoading(state),
+  organization: selectors.user.getOrganization(state),
 });
 
 const mapDispatchToProps = {

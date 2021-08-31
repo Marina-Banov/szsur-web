@@ -9,7 +9,7 @@ import { actions, selectors } from "store";
 import ActiveSurveyModal from "../ActiveSurveyModal";
 import { DeleteModal } from "components/common";
 
-function Surveys({ surveys, getSurveys, loading, deleteSurvey }) {
+function Surveys({ surveys, getSurveys, loading, deleteSurvey, organization }) {
   const { t } = useTranslation();
   const [showActiveModal, setShowActiveModal] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(null);
@@ -18,7 +18,7 @@ function Surveys({ surveys, getSurveys, loading, deleteSurvey }) {
     <>
       <Card>
         <CardBody>
-          <Button className="m-b m-r" onClick={getSurveys}>
+          <Button className="m-b m-r" onClick={() => getSurveys(organization)}>
             <i className="fa fa-refresh" />
           </Button>
           <Link to="/surveys/new">
@@ -126,6 +126,7 @@ function Surveys({ surveys, getSurveys, loading, deleteSurvey }) {
 const mapStateToProps = (state) => ({
   surveys: selectors.surveys.getSurveys(state),
   loading: selectors.surveys.getIsLoading(state),
+  organization: selectors.user.getOrganization(state),
 });
 
 const mapDispatchToProps = {

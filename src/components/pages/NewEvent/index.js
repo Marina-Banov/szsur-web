@@ -8,10 +8,10 @@ import { Event, EventForm, EventFormFields, EventFormValidation } from "models";
 import { actions, selectors } from "store";
 import { paths } from "../../../constants";
 
-function NewEvent({ addEvent, loading }) {
+function NewEvent({ addEvent, loading, organisation }) {
   const history = useHistory();
   const { data, handleInputChange, setFormField, handleSubmit, errors } =
-    useForm(new EventForm(), EventFormValidation, onSubmit);
+    useForm(new EventForm({ organisation }), EventFormValidation, onSubmit);
 
   async function onSubmit() {
     const body = new Event(data);
@@ -45,6 +45,7 @@ function NewEvent({ addEvent, loading }) {
 
 const mapStateToProps = (state) => ({
   loading: selectors.events.getIsLoading(state),
+  organisation: selectors.user.getOrganization(state),
 });
 
 const mapDispatchToProps = {

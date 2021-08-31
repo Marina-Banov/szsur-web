@@ -18,26 +18,43 @@ import {
 } from "utils";
 import appRoutes from "appRoutes";
 import { actions, selectors } from "store";
+import { useFirebase } from "appFirebase";
 
 const MOBILE_SIZE = 992;
 
-function Main({ events, getEvents, surveys, getSurveys, tags, getTags }) {
+function Main({
+  events,
+  getEvents,
+  surveys,
+  getSurveys,
+  tags,
+  getTags,
+  organization,
+  getUser,
+}) {
+  const firebase = useFirebase();
   const location = useLocation();
   const prevLocation = usePrevious(location);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= MOBILE_SIZE);
 
   useEffect(() => {
-    if (!events) {
-      getEvents();
+    if (!organization) {
+      getUser(firebase.auth.currentUser.uid);
     }
-  }, [events, getEvents]);
+  }, [firebase.auth.currentUser.uid, getUser, organization]);
 
   useEffect(() => {
-    if (!surveys) {
-      getSurveys();
+    if (organization && !events) {
+      getEvents(organization);
     }
-  }, [surveys, getSurveys]);
+  }, [events, getEvents, organization]);
+
+  useEffect(() => {
+    if (organization && !surveys) {
+      getSurveys(organization);
+    }
+  }, [surveys, getSurveys, organization]);
 
   useEffect(() => {
     if (!tags) {
@@ -131,12 +148,14 @@ const mapStateToProps = (state) => ({
   events: selectors.events.getEvents(state),
   surveys: selectors.surveys.getSurveys(state),
   tags: selectors.tags.getTags(state),
+  organization: selectors.user.getOrganization(state),
 });
 
 const mapDispatchToProps = {
   getEvents: actions.events.getEvents,
   getSurveys: actions.surveys.getSurveys,
   getTags: actions.tags.getTags,
+  getUser: actions.user.getUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

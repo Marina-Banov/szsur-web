@@ -16,6 +16,7 @@ export default class ActiveSurveyForm {
         answersCount: 0,
         description: "",
         image: null,
+        organisation: "",
         published: false,
         tags: [],
         title: "",

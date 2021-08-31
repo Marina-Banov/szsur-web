@@ -2,8 +2,8 @@ import { actions, paths } from "../../constants";
 import api from "api";
 import { buildURLFromParams } from "utils";
 
-const getEvents = () =>
-  api.get(paths.EVENTS, [
+const getEvents = (organization) =>
+  api.get(buildURLFromParams(paths.EVENTS, organization), [
     actions.GET_EVENTS_REQUEST,
     actions.GET_EVENTS_SUCCESS,
     actions.GET_EVENTS_ERROR,

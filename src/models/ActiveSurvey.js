@@ -6,6 +6,7 @@ export default class ActiveSurvey {
     this.answersCount = form.answersCount;
     this.description = form.description;
     this.image = form.image;
+    this.organisation = form.organisation;
     this.published = form.published;
     this.tags = form.tags;
     this.title = form.activeQuestion;

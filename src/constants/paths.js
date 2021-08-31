@@ -1,9 +1,10 @@
 export default {
+  USERS_ID: "/users/:id",
   TAGS: "/enums/tags",
-  EVENTS: "/events",
+  EVENTS: "/events?organisation=:organization",
   EVENTS_ID: "/events/:id",
   EVENTS_STORAGE: "event_images/",
-  SURVEYS: "/surveys",
+  SURVEYS: "/surveys?organisation=:organization",
   SURVEYS_ID: "/surveys/:id",
   SURVEYS_ID_RESULTS: "/surveys/:id/results",
   SURVEYS_ID_QUESTIONS: "/surveys/:id/questions",

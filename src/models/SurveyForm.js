@@ -12,13 +12,14 @@ export default class SurveyForm {
       this,
       {
         active: false,
-        title: "",
+        answersCount: 0,
         description: "",
         image: null,
-        tags: [],
-        questions: [],
+        organisation: "",
         published: false,
-        answersCount: 0,
+        questions: [],
+        tags: [],
+        title: "",
       },
       survey
     );

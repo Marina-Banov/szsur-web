@@ -15,11 +15,11 @@ import {
 import { actions, selectors } from "store";
 import { paths } from "../../../constants";
 
-function NewSurvey({ addSurvey, loading }) {
+function NewSurvey({ addSurvey, loading, organisation }) {
   const history = useHistory();
   const firebase = useFirebase();
   const { data, handleInputChange, setFormField, handleSubmit, errors } =
-    useForm(new SurveyForm(), SurveyFormValidation, onSubmit);
+    useForm(new SurveyForm({ organisation }), SurveyFormValidation, onSubmit);
 
   async function onSubmit() {
     const body = new Survey(data);
@@ -65,6 +65,7 @@ function NewSurvey({ addSurvey, loading }) {
 
 const mapStateToProps = (state) => ({
   loading: selectors.surveys.getIsLoading(state),
+  organisation: selectors.user.getOrganization(state),
 });
 
 const mapDispatchToProps = {
