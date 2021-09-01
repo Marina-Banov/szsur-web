@@ -55,17 +55,38 @@ export default function NewQuestion({
     updateQuestion(order, newQ);
   }
 
+  function toggleRequired() {
+    const required = !question.required;
+    updateQuestion(order, { ...question, required });
+  }
+
   return (
     <>
       <Divider className="mb-2" />
 
-      <div className="flex_space_between mb-2">
+      <div className="flex_space_between flex-wrap mb-2">
         <p className="m-0 h5">
           {t("surveys.question_number", { number: order + 1 })}
         </p>
-        <Button color="danger" onClick={() => deleteQuestion(order)}>
-          <i className="fa fa-trash" /> &nbsp; {t("surveys.delete_question")}
-        </Button>
+        <div className="text-right">
+          <Button
+            size="sm"
+            color={question.required ? "primary" : "secondary"}
+            className="mt-1"
+            onClick={toggleRequired}
+          >
+            <i className="fa fa-asterisk" /> &nbsp;
+            {t("surveys.mark_as_required")}
+          </Button>
+          <Button
+            size="sm"
+            color="danger"
+            className="ml-2 mt-1"
+            onClick={() => deleteQuestion(order)}
+          >
+            <i className="fa fa-trash" /> &nbsp; {t("surveys.delete_question")}
+          </Button>
+        </div>
       </div>
 
       <Row>

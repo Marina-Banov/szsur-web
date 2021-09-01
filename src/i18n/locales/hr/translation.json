@@ -64,7 +64,8 @@
     "delete": "Obriši anketu",
     "delete_sure": "Sigurno želiš obrisati anketu \"{{title}}\"?",
     "publish": "Objavi rezultate",
-    "publish_intro": "Ovdje možeš pogledati kako su korisnici mobilne aplikacije SZSUR odgovorili na anketu \"{{title}}\". Rezultati su dostupni u Excel formatu i tamo ih možeš obraditi prema vlastitim potrebama. Svoje zaključke i statistiku možeš s drugim studentima podijeliti u obliku teksta ili fotografija (npr. grafikona)."
+    "publish_intro": "Ovdje možeš pogledati kako su korisnici mobilne aplikacije SZSUR odgovorili na anketu \"{{title}}\". Rezultati su dostupni u Excel formatu i tamo ih možeš obraditi prema vlastitim potrebama. Svoje zaključke i statistiku možeš s drugim studentima podijeliti u obliku teksta i fotografija (npr. grafikona).",
+    "mark_as_required": "Označi kao obavezno"
   },
   "validation": {
     "required": "Molimo ispunite obavezna polja"

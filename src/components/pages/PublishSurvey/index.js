@@ -64,12 +64,13 @@ function PublishSurvey({ surveys, loading, updateSurvey }) {
     setCsvData(csv);
   }, [survey, surveys]);
 
-  function onSubmit() {
-    const resultImages = images.map(async (i) => ({
-      name: paths.SURVEYS_STORAGE + i.name,
-      base64: await toBase64(i),
-    }));
-    // TODO doesn't await
+  async function onSubmit() {
+    const resultImages = await Promise.all(
+      images.map(async (i) => ({
+        name: paths.SURVEYS_STORAGE + i.name,
+        base64: await toBase64(i),
+      }))
+    );
     updateSurvey(id, {
       description,
       resultImages,

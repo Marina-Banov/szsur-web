@@ -30,6 +30,9 @@ export default class SurveyForm {
 
   static async finalTransformation(data) {
     data.questions.forEach((q, i) => (q.order = (i + 1).toString()));
+    if (data.image.base64) {
+      return;
+    }
     data.image = {
       name: paths.SURVEYS_STORAGE + data.image.name,
       base64: await toBase64(data.image),

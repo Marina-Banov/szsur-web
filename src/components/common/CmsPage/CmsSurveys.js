@@ -21,6 +21,7 @@ export default function CmsSurveys({
       form.questions.concat({
         question: "",
         type: common.SURVEY_QUESTION_TYPE_TEXT,
+        required: false,
       })
     );
   }
@@ -65,15 +66,16 @@ export default function CmsSurveys({
           />
         </FormGroup>
 
-        {form.questions.map((q, index) => (
-          <NewQuestion
-            key={index}
-            question={q}
-            order={index}
-            updateQuestion={updateQuestion}
-            deleteQuestion={deleteQuestion}
-          />
-        ))}
+        {!form.published &&
+          form.questions.map((q, index) => (
+            <NewQuestion
+              key={index}
+              question={q}
+              order={index}
+              updateQuestion={updateQuestion}
+              deleteQuestion={deleteQuestion}
+            />
+          ))}
 
         {!form.published && (
           <FormGroup>

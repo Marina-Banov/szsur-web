@@ -29,7 +29,9 @@ export default function ImageCard({ errors, setFormField, FormFields, form }) {
             src={
               typeof form.image == "string"
                 ? form.image
-                : URL.createObjectURL(form.image)
+                : form.image instanceof File
+                ? URL.createObjectURL(form.image)
+                : form.image.base64
             }
             alt=""
           />
