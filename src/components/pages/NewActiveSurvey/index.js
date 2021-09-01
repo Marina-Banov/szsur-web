@@ -15,10 +15,8 @@ import {
   Row,
 } from "reactstrap";
 
-import { toBase64 } from "utils/toBase64";
-import useForm from "utils/useForm";
+import { useForm } from "utils";
 import {
-  ActiveSurvey,
   ActiveSurveyForm,
   ActiveSurveyFormValidation,
   ActiveSurveyFormFields as FormFields,
@@ -26,21 +24,21 @@ import {
 import { actions, selectors } from "store";
 import TagsCard from "components/common/CmsPage/TagsCard";
 import ImageCard from "components/common/CmsPage/ImageCard";
-import { common, paths } from "../../../constants";
+import { common } from "../../../constants";
 
-function NewSurvey({ addSurvey, loading }) {
+function NewActiveSurvey({ addSurvey, loading, organisation }) {
   const history = useHistory();
   const { t } = useTranslation();
   const { data, handleInputChange, setFormField, handleSubmit, errors } =
-    useForm(new ActiveSurveyForm(), ActiveSurveyFormValidation, onSubmit);
+    useForm(
+      new ActiveSurveyForm({ organisation }),
+      ActiveSurveyFormValidation,
+      onSubmit
+    );
 
   async function onSubmit() {
-    const body = new ActiveSurvey(data);
-    body.image = {
-      name: paths.SURVEYS_STORAGE + data.image.name,
-      base64: await toBase64(body.image),
-    };
-    addSurvey(body);
+    await ActiveSurveyForm.finalTransformation(data);
+    addSurvey(data);
     history.push("/surveys");
   }
 
@@ -83,7 +81,8 @@ function NewSurvey({ addSurvey, loading }) {
 
             {data.activeQuestionChoices.map((choice, index) => (
               <FormGroup
-                className={"flex_center_center input-with-button single"}
+                key={`choice-${index}`}
+                className="flex_center_center input-with-button single"
               >
                 <Input
                   placeholder={t("surveys.choice_number", {
@@ -150,10 +149,11 @@ function NewSurvey({ addSurvey, loading }) {
 
 const mapStateToProps = (state) => ({
   loading: selectors.surveys.getIsLoading(state),
+  organisation: selectors.user.getOrganization(state),
 });
 
 const mapDispatchToProps = {
   addSurvey: actions.surveys.addSurvey,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewSurvey);
+export default connect(mapStateToProps, mapDispatchToProps)(NewActiveSurvey);

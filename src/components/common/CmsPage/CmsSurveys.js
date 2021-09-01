@@ -16,24 +16,28 @@ export default function CmsSurveys({
   const { t } = useTranslation();
 
   function addQuestion() {
-    const t = [...form.questions];
-    t.push({
-      question: "",
-      type: common.SURVEY_QUESTION_TYPE_TEXT,
-    });
-    setFormField(FormFields.questions, t);
+    setFormField(
+      FormFields.questions,
+      form.questions.concat({
+        question: "",
+        type: common.SURVEY_QUESTION_TYPE_TEXT,
+        required: false,
+      })
+    );
   }
 
   function deleteQuestion(index) {
-    const t = [...form.questions];
-    t.splice(index, 1);
-    setFormField(FormFields.questions, t);
+    setFormField(
+      FormFields.questions,
+      form.questions.filter((q, idx) => idx !== index)
+    );
   }
 
   function updateQuestion(index, newQ) {
-    const t = [...form.questions];
-    t[index] = newQ;
-    setFormField(FormFields.questions, t);
+    setFormField(
+      FormFields.questions,
+      form.questions.map((q, idx) => (idx === index ? newQ : q))
+    );
   }
 
   return (
@@ -62,15 +66,16 @@ export default function CmsSurveys({
           />
         </FormGroup>
 
-        {form.questions.map((q, index) => (
-          <NewQuestion
-            key={index}
-            question={q}
-            order={index}
-            updateQuestion={updateQuestion}
-            deleteQuestion={deleteQuestion}
-          />
-        ))}
+        {!form.published &&
+          form.questions.map((q, index) => (
+            <NewQuestion
+              key={index}
+              question={q}
+              order={index}
+              updateQuestion={updateQuestion}
+              deleteQuestion={deleteQuestion}
+            />
+          ))}
 
         {!form.published && (
           <FormGroup>

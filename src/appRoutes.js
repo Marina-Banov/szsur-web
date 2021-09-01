@@ -2,12 +2,13 @@ import {
   Dashboard,
   EditEvent,
   EditSurvey,
-  Events,
+  NewActiveSurvey,
   NewEvent,
   NewSurvey,
-  NewActiveSurvey,
   NotFound,
-  Surveys,
+  PublishSurvey,
+  TableEvents,
+  TableSurveys,
 } from "components/pages";
 
 const mainRoutes = [
@@ -29,7 +30,7 @@ const mainRoutes = [
   {
     name: "Događaji",
     path: "/events",
-    component: Events,
+    component: TableEvents,
   },
   {
     name: "Novi događaj",
@@ -39,7 +40,7 @@ const mainRoutes = [
   {
     name: "Ankete",
     path: "/surveys",
-    component: Surveys,
+    component: TableSurveys,
   },
   {
     name: "Nova anketa",
@@ -60,6 +61,11 @@ const mainRoutes = [
     name: "Uredi anketu",
     path: "/surveys/:id",
     component: EditSurvey,
+  },
+  {
+    name: "Objavi rezultate ankete",
+    path: "/surveys/publish/:id",
+    component: PublishSurvey,
   },
 ];
 

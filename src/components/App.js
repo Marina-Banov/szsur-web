@@ -3,8 +3,8 @@ import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 
 import { useFirebase } from "appFirebase";
 import { Main } from "components/common";
-import { Login, EmailVerification } from "components/pages";
-import { PrivateRoute } from "utils/PrivateRoute";
+import { Login, LoginEmailVerification } from "components/pages";
+import { PrivateRoute } from "utils";
 
 import "bootstrap/scss/bootstrap.scss";
 import "font-awesome/css/font-awesome.min.css";
@@ -37,7 +37,7 @@ export default function App() {
         <PrivateRoute
           path="/email-verification"
           exact
-          component={EmailVerification}
+          component={LoginEmailVerification}
           hasAccess={!authenticated}
         />
         <PrivateRoute path="/" component={Main} hasAccess={authenticated} />

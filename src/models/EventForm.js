@@ -1,5 +1,6 @@
-import { combineDateTime, getISOTime, validDateRange } from "utils/dateUtils";
 import moment from "moment";
+
+import { combineDateTime, getISOTime, validDateRange } from "utils";
 
 export const EventFormFields = {
   title: "title",
@@ -12,7 +13,6 @@ export const EventFormFields = {
   locationIsOnline: "location.online",
   locationValueOnline: "location.valueOnline",
   locationValueOnsite: "location.valueOnsite",
-  organisation: "organisation",
   startDate: "startDate",
   startTime: "startTime",
 };
@@ -38,12 +38,10 @@ export default class EventForm {
     Object.assign(
       this,
       {
-        title: "",
         description: "",
-        image: null,
-        tags: [],
         endDate: "",
         endTime: "",
+        image: null,
         location: {
           online: null,
           valueOnline: "",
@@ -52,6 +50,8 @@ export default class EventForm {
         organisation: "",
         startDate: "",
         startTime: "",
+        tags: [],
+        title: "",
       },
       event
     );
@@ -63,7 +63,6 @@ export const EventFormValidation = {
   description: { required: true },
   image: { required: true },
   tags: { required: true },
-  organisation: { required: true },
   startDate: { required: true },
   startTime: { required: true },
   endDate: {

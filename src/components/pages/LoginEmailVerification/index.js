@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { common } from "../../../constants";
 import { useFirebase } from "appFirebase";
 
-export default function EmailVerification() {
+export default function LoginEmailVerification() {
   const { t } = useTranslation();
   const [message, setMessage] = useState("");
   const firebase = useFirebase();

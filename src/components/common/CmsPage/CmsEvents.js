@@ -219,19 +219,6 @@ export default function CmsEvents({
             invalid={errors.includes(FormFields.description)}
           />
         </FormGroup>
-        <FormGroup className="mb-3">
-          <Label for={FormFields.organisation}>
-            {t("events.organisation")}
-          </Label>
-          <Input
-            id={FormFields.organisation}
-            type="text"
-            name={FormFields.organisation}
-            onChange={handleInputChange}
-            value={form.organisation}
-            invalid={errors.includes(FormFields.organisation)}
-          />
-        </FormGroup>
       </CardBody>
     </Card>
   );

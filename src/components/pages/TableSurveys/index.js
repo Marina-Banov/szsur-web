@@ -7,16 +7,18 @@ import { Link } from "react-router-dom";
 
 import { actions, selectors } from "store";
 import ActiveSurveyModal from "../ActiveSurveyModal";
+import { DeleteModal } from "components/common";
 
-function Surveys({ surveys, getSurveys, loading, deleteSurvey }) {
+function TableSurveys({ surveys, getSurveys, loading, deleteSurvey, organization }) {
   const { t } = useTranslation();
-  const [showModal, setShowModal] = useState(null);
+  const [showActiveModal, setShowActiveModal] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(null);
 
   return (
     <>
       <Card>
         <CardBody>
-          <Button className="m-b m-r" onClick={getSurveys}>
+          <Button className="m-b m-r" onClick={() => getSurveys(organization)}>
             <i className="fa fa-refresh" />
           </Button>
           <Link to="/surveys/new">
@@ -73,19 +75,21 @@ function Surveys({ surveys, getSurveys, loading, deleteSurvey }) {
                           ) : s.active ? (
                             <Button
                               className="ml-2 py-1 icon"
-                              onClick={() => setShowModal(s)}
+                              onClick={() => setShowActiveModal(s)}
                             >
                               <i className="fa fa-eye" />
                             </Button>
                           ) : (
-                            <Button className="ml-2 py-1 icon">
-                              <i className="fa fa-check" />
-                            </Button>
+                            <Link to={{ pathname: `/surveys/publish/${s.id}` }}>
+                              <Button className="ml-2 py-1 icon">
+                                <i className="fa fa-check" />
+                              </Button>
+                            </Link>
                           )}
                           <Button
                             color="danger"
                             className="ml-2 py-1 icon"
-                            onClick={() => deleteSurvey(s.id)}
+                            onClick={() => setShowDeleteModal(s)}
                           >
                             <i className="fa fa-trash" />
                           </Button>
@@ -104,7 +108,17 @@ function Surveys({ surveys, getSurveys, loading, deleteSurvey }) {
           </div>
         </CardBody>
       </Card>
-      <ActiveSurveyModal survey={showModal} close={() => setShowModal(null)} />
+      <ActiveSurveyModal
+        survey={showActiveModal}
+        close={() => setShowActiveModal(null)}
+      />
+      <DeleteModal
+        target={showDeleteModal}
+        close={() => setShowDeleteModal(null)}
+        onDelete={(s) => deleteSurvey(s.id)}
+        title={t("surveys.delete")}
+        text={t("surveys.delete_sure", { title: showDeleteModal?.title })}
+      />
     </>
   );
 }
@@ -112,6 +126,7 @@ function Surveys({ surveys, getSurveys, loading, deleteSurvey }) {
 const mapStateToProps = (state) => ({
   surveys: selectors.surveys.getSurveys(state),
   loading: selectors.surveys.getIsLoading(state),
+  organization: selectors.user.getOrganization(state),
 });
 
 const mapDispatchToProps = {
@@ -119,4 +134,4 @@ const mapDispatchToProps = {
   deleteSurvey: actions.surveys.deleteSurvey,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Surveys);
+export default connect(mapStateToProps, mapDispatchToProps)(TableSurveys);

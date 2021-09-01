@@ -1,5 +1,6 @@
 import request from "superagent";
-import { buildURL } from "utils/buildURL";
+
+import { buildURL } from "utils";
 
 let authToken = null;
 

@@ -19,7 +19,9 @@
   },
   "images": {
     "image": "Slika",
-    "add_image": "Dodaj sliku"
+    "images": "Slike",
+    "add_image": "Dodaj sliku",
+    "change_image": "Promijeni sliku"
   },
   "events": {
     "event": "događaj",
@@ -32,9 +34,10 @@
     "end_time": "Vrijeme završetka",
     "online_address": "URL događaja",
     "onsite_address": "Adresa",
-    "organisation": "Organizator",
     "hours": "Sati",
-    "minutes": "Minute"
+    "minutes": "Minute",
+    "delete": "Obriši događaj",
+    "delete_sure": "Sigurno želiš obrisati događaj \"{{title}}\"?"
   },
   "surveys": {
     "no_surveys": "Nema anketa.",
@@ -55,7 +58,14 @@
     "single_choice": "Jednostruki izbor",
     "multiple_choice": "Višestruki izbor",
     "new_choice": "Novi izbor",
-    "choice_number": "Izbor {{number}}"
+    "choice_number": "Izbor {{number}}",
+    "results_filename": "SZSUR_Rezultati_ankete",
+    "export_results": "Preuzmi rezultate ankete",
+    "delete": "Obriši anketu",
+    "delete_sure": "Sigurno želiš obrisati anketu \"{{title}}\"?",
+    "publish": "Objavi rezultate",
+    "publish_intro": "Ovdje možeš pogledati kako su korisnici mobilne aplikacije SZSUR odgovorili na anketu \"{{title}}\". Rezultati su dostupni u Excel formatu i tamo ih možeš obraditi prema vlastitim potrebama. Svoje zaključke i statistiku možeš s drugim studentima podijeliti u obliku teksta i fotografija (npr. grafikona).",
+    "mark_as_required": "Označi kao obavezno"
   },
   "validation": {
     "required": "Molimo ispunite obavezna polja"

@@ -6,7 +6,7 @@ import { Input } from "reactstrap";
 
 import "./index.scss";
 
-export default function Time({ initialValue, id, name, invalid, onChange }) {
+export default function TimePicker({ initialValue, id, name, invalid, onChange }) {
   const [_initialValue] = useState(initialValue);
   const [m, setM] = useState(
     initialValue === "" ? moment(Date.now()) : moment(initialValue)

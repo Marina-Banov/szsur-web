@@ -3,17 +3,9 @@ import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 
 import { CmsPage, CmsSurveys } from "components/common";
-import useForm from "utils/useForm";
-import {
-  Survey,
-  Questions,
-  SurveyForm,
-  SurveyFormFields,
-  SurveyFormValidation,
-} from "models";
+import { useForm } from "utils";
+import { SurveyForm, SurveyFormFields, SurveyFormValidation } from "models";
 import { actions, selectors } from "store";
-import { paths } from "../../../constants";
-import { toBase64 } from "utils/toBase64";
 
 function EditSurvey({ updateSurvey, surveys, loading }) {
   const history = useHistory();
@@ -23,12 +15,8 @@ function EditSurvey({ updateSurvey, surveys, loading }) {
     useForm(new SurveyForm({ ...survey }), SurveyFormValidation, onSubmit);
 
   async function onSubmit() {
-    const body = new Survey(data);
-    body.image = {
-      name: paths.SURVEYS_STORAGE + data.image.name,
-      base64: await toBase64(body.image),
-    };
-    updateSurvey(id, body);
+    await SurveyForm.finalTransformation(data);
+    updateSurvey(id, data);
     history.push("/surveys");
   }
 

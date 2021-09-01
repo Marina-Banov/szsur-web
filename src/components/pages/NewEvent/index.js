@@ -3,16 +3,15 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { CmsPage, CmsEvents } from "components/common";
-import useForm from "utils/useForm";
+import { toBase64, useForm } from "utils";
 import { Event, EventForm, EventFormFields, EventFormValidation } from "models";
 import { actions, selectors } from "store";
 import { paths } from "../../../constants";
-import { toBase64 } from "utils/toBase64";
 
-function NewEvent({ addEvent, loading }) {
+function NewEvent({ addEvent, loading, organisation }) {
   const history = useHistory();
   const { data, handleInputChange, setFormField, handleSubmit, errors } =
-    useForm(new EventForm(), EventFormValidation, onSubmit);
+    useForm(new EventForm({ organisation }), EventFormValidation, onSubmit);
 
   async function onSubmit() {
     const body = new Event(data);
@@ -46,6 +45,7 @@ function NewEvent({ addEvent, loading }) {
 
 const mapStateToProps = (state) => ({
   loading: selectors.events.getIsLoading(state),
+  organisation: selectors.user.getOrganization(state),
 });
 
 const mapDispatchToProps = {

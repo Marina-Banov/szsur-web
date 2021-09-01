@@ -1,6 +1,6 @@
 {
-  "name": "sztfr-web",
-  "version": "0.1.0",
+  "name": "szsur-web",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.3",
@@ -13,6 +13,7 @@
     "classnames": "^2.2.6",
     "dotenv": "^9.0.1",
     "feather-icons": "^4.28.0",
+    "file-saver": "^2.0.5",
     "firebase": "^8.3.1",
     "font-awesome": "^4.7.0",
     "i18next": "^20.1.0",
@@ -36,7 +37,8 @@
     "redux-thunk": "^2.3.0",
     "rxjs": "^6.6.7",
     "superagent": "^6.1.0",
-    "web-vitals": "^1.1.1"
+    "web-vitals": "^1.1.1",
+    "xlsx": "^0.17.1"
   },
   "scripts": {
     "start": "react-scripts start",
