@@ -1,13 +1,13 @@
 export { default as Dashboard } from "./Dashboard";
 export { default as EditEvent } from "./EditEvent";
 export { default as EditSurvey } from "./EditSurvey";
-export { default as EmailVerification } from "./LoginEmailVerification";
-export { default as Events } from "./TableEvents";
 export { default as Login } from "./Login";
+export { default as LoginEmailVerification } from "./LoginEmailVerification";
 export { default as LoginWithEmailLink } from "./LoginWithEmailLink";
 export { default as NewActiveSurvey } from "./NewActiveSurvey";
 export { default as NewEvent } from "./NewEvent";
 export { default as NewSurvey } from "./NewSurvey";
 export { default as NotFound } from "./NotFound";
 export { default as PublishSurvey } from "./PublishSurvey";
-export { default as Surveys } from "./TableSurveys";
+export { default as TableEvents } from "./TableEvents";
+export { default as TableSurveys } from "./TableSurveys";

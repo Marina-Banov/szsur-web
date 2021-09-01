@@ -9,7 +9,7 @@ import { actions, selectors } from "store";
 import ActiveSurveyModal from "../ActiveSurveyModal";
 import { DeleteModal } from "components/common";
 
-function Surveys({ surveys, getSurveys, loading, deleteSurvey, organization }) {
+function TableSurveys({ surveys, getSurveys, loading, deleteSurvey, organization }) {
   const { t } = useTranslation();
   const [showActiveModal, setShowActiveModal] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(null);
@@ -134,4 +134,4 @@ const mapDispatchToProps = {
   deleteSurvey: actions.surveys.deleteSurvey,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Surveys);
+export default connect(mapStateToProps, mapDispatchToProps)(TableSurveys);

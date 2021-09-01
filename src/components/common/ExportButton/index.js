@@ -5,7 +5,7 @@ import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
 import { useTranslation } from "react-i18next";
 
-export default function ExportCSV({ className, csvData, fileName, loading }) {
+export default function ExportButton({ className, csvData, fileName, loading }) {
   const { t } = useTranslation();
   const fileType =
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";

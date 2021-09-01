@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { actions, selectors } from "store";
 import { DeleteModal } from "components/common";
 
-function Events({ events, getEvents, loading, deleteEvent, organization }) {
+function TableEvents({ events, getEvents, loading, deleteEvent, organization }) {
   const { t } = useTranslation();
   const [showDeleteModal, setShowDeleteModal] = useState(null);
 
@@ -104,4 +104,4 @@ const mapDispatchToProps = {
   deleteEvent: actions.events.deleteEvent,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Events);
+export default connect(mapStateToProps, mapDispatchToProps)(TableEvents);
