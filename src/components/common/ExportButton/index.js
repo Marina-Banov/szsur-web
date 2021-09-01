@@ -5,7 +5,7 @@ import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
 import { useTranslation } from "react-i18next";
 
-export default function ExportCSV({ csvData, fileName, loading }) {
+export default function ExportCSV({ className, csvData, fileName, loading }) {
   const { t } = useTranslation();
   const fileType =
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
@@ -21,16 +21,19 @@ export default function ExportCSV({ csvData, fileName, loading }) {
 
   return (
     <Button
+      className={className}
       color="warning"
+      block
       onClick={exportToCSV}
       disabled={loading || csvData.length === 0}
     >
+      <i className="fa fa-download mr-2" />
       {t("surveys.export_results")}
       {loading && (
         <CircularProgress
           color="inherit"
-          size={15}
-          thickness={5}
+          size={16}
+          thickness={6}
           className="ml-2"
         />
       )}

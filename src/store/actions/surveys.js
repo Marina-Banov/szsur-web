@@ -3,24 +3,10 @@ import api from "api";
 import { buildURLFromParams } from "utils";
 
 const getSurveys = (organization) =>
-  api.get(buildURLFromParams(paths.SURVEYS, organization), [
+  api.get(buildURLFromParams(paths.SURVEYS_QUERY, organization), [
     actions.GET_SURVEYS_REQUEST,
     actions.GET_SURVEYS_SUCCESS,
     actions.GET_SURVEYS_ERROR,
-  ]);
-
-const getSurveyResults = (id) =>
-  api.getSubcollection(buildURLFromParams(paths.SURVEYS_ID_RESULTS, id), id, [
-    actions.GET_SURVEY_RESULTS_REQUEST,
-    actions.GET_SURVEY_RESULTS_SUCCESS,
-    actions.GET_SURVEY_RESULTS_ERROR,
-  ]);
-
-const getSurveyQuestions = (id) =>
-  api.getSubcollection(buildURLFromParams(paths.SURVEYS_ID_QUESTIONS, id), id, [
-    actions.GET_SURVEY_QUESTIONS_REQUEST,
-    actions.GET_SURVEY_QUESTIONS_SUCCESS,
-    actions.GET_SURVEY_QUESTIONS_ERROR,
   ]);
 
 const addSurvey = (body) =>
@@ -46,8 +32,6 @@ const deleteSurvey = (id) =>
 
 export default {
   getSurveys,
-  getSurveyResults,
-  getSurveyQuestions,
   addSurvey,
   updateSurvey,
   deleteSurvey,

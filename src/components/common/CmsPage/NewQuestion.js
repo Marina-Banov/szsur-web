@@ -110,7 +110,7 @@ export default function NewQuestion({
 
       {question.choices?.map((choice, index) => (
         <FormGroup
-          key={index}
+          key={`choice-${index}`}
           className={
             (index > 1 ? "flex_center_center input-with-button " : "") +
             (question.type === common.SURVEY_QUESTION_TYPE_MULTIPLE

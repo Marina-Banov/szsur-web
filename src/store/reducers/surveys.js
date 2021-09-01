@@ -12,50 +12,12 @@ const actionMap = {
   }),
   [actions.GET_SURVEYS_SUCCESS]: (state, action) => ({
     ...state,
-    data: action.data,
+    data: action.data.map((s) => Object.assign({ results: [] }, s)),
     isLoading: false,
   }),
   [actions.GET_SURVEYS_ERROR]: (state, _) => ({
     ...state,
     data: [],
-    isLoading: false,
-  }),
-  [actions.GET_SURVEY_RESULTS_REQUEST]: (state, _) => ({
-    ...state,
-    isLoading: true,
-  }),
-  [actions.GET_SURVEY_RESULTS_SUCCESS]: (state, action) => {
-    const index = state.data.findIndex((e) => e.id === action.id);
-    if (index >= 0) {
-      state.data[index].results = action.data;
-    }
-    return {
-      ...state,
-      data: [...state.data],
-      isLoading: false,
-    };
-  },
-  [actions.GET_SURVEY_RESULTS_ERROR]: (state, _) => ({
-    ...state,
-    isLoading: false,
-  }),
-  [actions.GET_SURVEY_QUESTIONS_REQUEST]: (state, _) => ({
-    ...state,
-    isLoading: true,
-  }),
-  [actions.GET_SURVEY_QUESTIONS_SUCCESS]: (state, action) => {
-    const index = state.data.findIndex((e) => e.id === action.id);
-    if (index >= 0) {
-      state.data[index].questions = action.data;
-    }
-    return {
-      ...state,
-      data: [...state.data],
-      isLoading: false,
-    };
-  },
-  [actions.GET_SURVEY_QUESTIONS_ERROR]: (state, _) => ({
-    ...state,
     isLoading: false,
   }),
   [actions.UPDATE_SURVEY_REQUEST]: (state, _) => ({

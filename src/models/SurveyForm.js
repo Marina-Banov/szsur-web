@@ -1,3 +1,6 @@
+import { paths } from "../constants";
+import { toBase64 } from "utils";
+
 export const SurveyFormFields = {
   title: "title",
   description: "description",
@@ -23,6 +26,14 @@ export default class SurveyForm {
       },
       survey
     );
+  }
+
+  static async finalTransformation(data) {
+    data.questions.forEach((q, i) => (q.order = (i + 1).toString()));
+    data.image = {
+      name: paths.SURVEYS_STORAGE + data.image.name,
+      base64: await toBase64(data.image),
+    };
   }
 }
 

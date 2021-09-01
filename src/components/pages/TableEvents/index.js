@@ -49,34 +49,34 @@ function Events({ events, getEvents, loading, deleteEvent, organization }) {
                     </td>
                   </tr>
                 )}
-                {events ? (
-                  events.map((e) => (
-                    <tr key={e.id}>
-                      <td>{e.title}</td>
-                      <td>{displayDate(e)}</td>
-                      <td className="text-right">
-                        <Link to={{ pathname: `events/${e.id}` }}>
-                          <Button className="py-1 icon">
-                            <i className="fa fa-pencil" />
+                {events?.length > 0
+                  ? events.map((e) => (
+                      <tr key={e.id}>
+                        <td>{e.title}</td>
+                        <td>{displayDate(e)}</td>
+                        <td className="text-right">
+                          <Link to={{ pathname: `events/${e.id}` }}>
+                            <Button className="py-1 icon">
+                              <i className="fa fa-pencil" />
+                            </Button>
+                          </Link>
+                          <Button
+                            color="danger"
+                            className="ml-2 py-1 icon"
+                            onClick={() => setShowDeleteModal(e)}
+                          >
+                            <i className="fa fa-trash" />
                           </Button>
-                        </Link>
-                        <Button
-                          color="danger"
-                          className="ml-2 py-1 icon"
-                          onClick={() => setShowDeleteModal(e)}
-                        >
-                          <i className="fa fa-trash" />
-                        </Button>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan={3} align="center">
-                      {t("events.no_events")}
-                    </td>
-                  </tr>
-                )}
+                        </td>
+                      </tr>
+                    ))
+                  : events && (
+                      <tr>
+                        <td colSpan={3} align="center">
+                          {t("events.no_events")}
+                        </td>
+                      </tr>
+                    )}
               </tbody>
             </Table>
           </div>

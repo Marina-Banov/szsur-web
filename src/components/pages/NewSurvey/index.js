@@ -2,44 +2,19 @@ import React from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import { useFirebase } from "appFirebase";
 import { CmsPage, CmsSurveys } from "components/common";
-import { handlePromise, toBase64, useForm } from "utils";
-import {
-  Survey,
-  Questions,
-  SurveyForm,
-  SurveyFormFields,
-  SurveyFormValidation,
-} from "models";
+import { useForm } from "utils";
+import { SurveyForm, SurveyFormFields, SurveyFormValidation } from "models";
 import { actions, selectors } from "store";
-import { paths } from "../../../constants";
 
 function NewSurvey({ addSurvey, loading, organisation }) {
   const history = useHistory();
-  const firebase = useFirebase();
   const { data, handleInputChange, setFormField, handleSubmit, errors } =
     useForm(new SurveyForm({ organisation }), SurveyFormValidation, onSubmit);
 
   async function onSubmit() {
-    const body = new Survey(data);
-    body.image = {
-      name: paths.SURVEYS_STORAGE + data.image.name,
-      base64: await toBase64(body.image),
-    };
-    addSurvey(body);
-
-    /*  const res2 = await handlePromise(
-          firebase.firestoreCreateBulk(
-            common.FIRESTORE_QUESTIONS_COLLECTION,
-            new Questions(data).questions,
-            res1.data
-          )
-        );
-        if (res2.error) {
-          setLoading(false);
-          return;
-        }*/
+    await SurveyForm.finalTransformation(data);
+    addSurvey(data);
     history.push("/surveys");
   }
 

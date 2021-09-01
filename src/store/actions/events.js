@@ -3,7 +3,7 @@ import api from "api";
 import { buildURLFromParams } from "utils";
 
 const getEvents = (organization) =>
-  api.get(buildURLFromParams(paths.EVENTS, organization), [
+  api.get(buildURLFromParams(paths.EVENTS_QUERY, organization), [
     actions.GET_EVENTS_REQUEST,
     actions.GET_EVENTS_SUCCESS,
     actions.GET_EVENTS_ERROR,

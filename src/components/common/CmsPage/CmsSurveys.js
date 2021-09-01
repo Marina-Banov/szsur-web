@@ -16,24 +16,27 @@ export default function CmsSurveys({
   const { t } = useTranslation();
 
   function addQuestion() {
-    const t = [...form.questions];
-    t.push({
-      question: "",
-      type: common.SURVEY_QUESTION_TYPE_TEXT,
-    });
-    setFormField(FormFields.questions, t);
+    setFormField(
+      FormFields.questions,
+      form.questions.concat({
+        question: "",
+        type: common.SURVEY_QUESTION_TYPE_TEXT,
+      })
+    );
   }
 
   function deleteQuestion(index) {
-    const t = [...form.questions];
-    t.splice(index, 1);
-    setFormField(FormFields.questions, t);
+    setFormField(
+      FormFields.questions,
+      form.questions.filter((q, idx) => idx !== index)
+    );
   }
 
   function updateQuestion(index, newQ) {
-    const t = [...form.questions];
-    t[index] = newQ;
-    setFormField(FormFields.questions, t);
+    setFormField(
+      FormFields.questions,
+      form.questions.map((q, idx) => (idx === index ? newQ : q))
+    );
   }
 
   return (

@@ -1,7 +1,6 @@
 export { buildURL, buildURLFromParams } from "./buildURL";
 export { combineDateTime, getISOTime, validDateRange } from "./dateUtils";
 export { flattenObject } from "./flattenObject";
-export { handlePromise } from "./handlePromise";
 export {
   handleClickAccessibility,
   handleKeyAccessibility,

@@ -1,7 +1,6 @@
 import { createContext, useContext } from "react";
 import app from "firebase/app";
 import "firebase/auth";
-import "firebase/firestore";
 
 import { common } from "./constants";
 import api from "./api";
@@ -29,7 +28,6 @@ export default class Firebase {
         });
       }
     });
-    this.firestore = app.firestore();
   }
 
   sendLoginLink = (email) => {
@@ -64,14 +62,5 @@ export default class Firebase {
 
   loggedIn = () => {
     return !!this.auth.currentUser;
-  };
-
-  firestoreCreateBulk = (collectionName, payload, doc = this.firestore) => {
-    const batch = this.firestore.batch();
-    payload.forEach((p) => {
-      const docRef = doc.collection(collectionName).doc();
-      batch.set(docRef, Object.assign({}, p));
-    });
-    return batch.commit();
   };
 }

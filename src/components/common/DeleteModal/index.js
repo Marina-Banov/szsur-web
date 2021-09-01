@@ -10,7 +10,13 @@ export default function DeleteModal({ target, close, onDelete, title, text }) {
       <ModalHeader toggle={close}>{title}</ModalHeader>
       <ModalBody>{text}</ModalBody>
       <ModalFooter>
-        <Button color="danger" onClick={() => onDelete(target)}>
+        <Button
+          color="danger"
+          onClick={() => {
+            onDelete(target);
+            close();
+          }}
+        >
           {t("delete")}
         </Button>
         <Button color="secondary" onClick={close}>

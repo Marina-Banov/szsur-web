@@ -1,3 +1,6 @@
+import { paths } from "../constants";
+import { toBase64 } from "utils";
+
 export const ActiveSurveyFormFields = {
   activeQuestion: "activeQuestion",
   activeQuestionChoices: "activeQuestionChoices",
@@ -23,6 +26,13 @@ export default class ActiveSurveyForm {
       },
       survey
     );
+  }
+
+  static async finalTransformation(data) {
+    data.image = {
+      name: paths.SURVEYS_STORAGE + data.image.name,
+      base64: await toBase64(data.image),
+    };
   }
 }
 

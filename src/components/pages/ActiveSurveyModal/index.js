@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import { CircularProgress } from "@material-ui/core";
 import { connect } from "react-redux";
 import { HorizontalBar } from "react-chartjs-2";
 
-import { actions, selectors } from "store";
+import { selectors } from "store";
 
-function ActiveSurveyModal({ survey, close, getSurveyResults, loading }) {
+function ActiveSurveyModal({ survey, close, loading }) {
   const chartData = {
     labels: survey?.activeQuestionChoices,
     datasets: [
@@ -45,12 +45,6 @@ function ActiveSurveyModal({ survey, close, getSurveyResults, loading }) {
     },
   };
 
-  useEffect(() => {
-    if (survey && !survey.results) {
-      getSurveyResults(survey.id);
-    }
-  }, [getSurveyResults, survey]);
-
   return (
     <Modal isOpen={!!survey} toggle={close}>
       <ModalHeader toggle={close}>{survey?.title}</ModalHeader>
@@ -60,9 +54,7 @@ function ActiveSurveyModal({ survey, close, getSurveyResults, loading }) {
             <CircularProgress />
           </div>
         ) : (
-          survey?.results && (
-            <HorizontalBar data={chartData} options={chartOptions} />
-          )
+          survey && <HorizontalBar data={chartData} options={chartOptions} />
         )}
       </ModalBody>
     </Modal>
@@ -73,8 +65,6 @@ const mapStateToProps = (state) => ({
   loading: selectors.surveys.getIsLoading(state),
 });
 
-const mapDispatchToProps = {
-  getSurveyResults: actions.surveys.getSurveyResults,
-};
+const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ActiveSurveyModal);
