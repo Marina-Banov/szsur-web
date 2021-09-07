@@ -10,7 +10,7 @@ import {
   PageLoaderProvider,
   PageAlertProvider,
 } from "components/common";
-import { NotFound } from "components/pages";
+import { Forbidden, NotFound } from "components/pages";
 import {
   handleClickAccessibility,
   handleKeyAccessibility,
@@ -65,10 +65,10 @@ function Main({
   }, [getOrganization, organization, organizationName]);
 
   useEffect(() => {
-    if (!tags) {
+    if (organizationName && !tags) {
       getTags();
     }
-  }, [getTags, tags]);
+  }, [getTags, organizationName, tags]);
 
   function handleResize() {
     if (window.innerWidth <= MOBILE_SIZE) {
@@ -127,7 +127,7 @@ function Main({
                     <Route
                       path={page.path}
                       exact
-                      component={page.component}
+                      component={organizationName ? page.component : Forbidden}
                       key={key}
                     />
                   ))}

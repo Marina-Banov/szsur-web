@@ -1,6 +1,7 @@
 export { default as Dashboard } from "./Dashboard";
 export { default as EditEvent } from "./EditEvent";
 export { default as EditSurvey } from "./EditSurvey";
+export { default as Forbidden } from "./Forbidden";
 export { default as Login } from "./Login";
 export { default as LoginEmailVerification } from "./LoginEmailVerification";
 export { default as LoginWithEmailLink } from "./LoginWithEmailLink";
