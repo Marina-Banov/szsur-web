@@ -11,6 +11,9 @@ import {
   Col,
   FormGroup,
   Input,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
   Label,
   Row,
 } from "reactstrap";
@@ -23,15 +26,31 @@ import {
 import { useForm } from "utils";
 import { actions, selectors } from "store";
 
-function Settings({ organization, loading }) {
+function Settings({
+  organizationName,
+  organization,
+  loading,
+  updateOrganization,
+}) {
   const { t } = useTranslation();
   const { data, handleInputChange, handleSubmit, errors } = useForm(
     new OrganizationForm({ ...organization }),
     OrganizationFormValidation,
     onSubmit
   );
+  const contactIcons = {
+    web: "fa-globe",
+    mail: "fa-envelope",
+    facebook: "fa-facebook-square",
+    instagram: "fa-instagram",
+    linkedin: "fa-linkedin-square",
+    // TODO
+    messenger: "",
+  };
 
-  function onSubmit() {}
+  function onSubmit() {
+    updateOrganization(organizationName, data);
+  }
 
   return (
     <Row>
@@ -53,6 +72,7 @@ function Settings({ organization, loading }) {
               <Label for={FormFields.description}>{t("description")}</Label>
               <Input
                 type="textarea"
+                rows={8}
                 name={FormFields.description}
                 id={FormFields.description}
                 onChange={handleInputChange}
@@ -66,7 +86,26 @@ function Settings({ organization, loading }) {
       <Col md={4}>
         <Card>
           <CardHeader>{t("organization.social_media")}</CardHeader>
-          <CardBody></CardBody>
+          <CardBody>
+            {Object.keys(data.contacts).map((c) => (
+              <InputGroup className="my-2">
+                <InputGroupAddon addonType="prepend">
+                  <InputGroupText>
+                    <i className={`fa ${contactIcons[c]}`} />
+                  </InputGroupText>
+                </InputGroupAddon>
+                <Input
+                  type="text"
+                  placeholder={c.charAt(0).toUpperCase() + c.substr(1)}
+                  aria-label={c}
+                  name={FormFields[c]}
+                  id={FormFields[c]}
+                  onChange={handleInputChange}
+                  value={data.contacts[c]}
+                />
+              </InputGroup>
+            ))}
+          </CardBody>
         </Card>
         <Button block color="primary" disabled={loading} onClick={handleSubmit}>
           {t("save_changes")}
@@ -88,12 +127,13 @@ function Settings({ organization, loading }) {
 }
 
 const mapStateToProps = (state) => ({
-  surveys: selectors.surveys.getSurveys(state),
-  loading: selectors.surveys.getIsLoading(state),
+  organizationName: selectors.user.getOrganizationName(state),
+  organization: selectors.organization.getOrganization(state),
+  loading: selectors.organization.getIsLoading(state),
 });
 
 const mapDispatchToProps = {
-  updateSurvey: actions.surveys.updateSurvey,
+  updateOrganization: actions.organization.updateOrganization,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

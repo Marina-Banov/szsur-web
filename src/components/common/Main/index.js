@@ -29,6 +29,8 @@ function Main({
   getSurveys,
   tags,
   getTags,
+  organization,
+  getOrganization,
   organizationName,
   getUser,
 }) {
@@ -55,6 +57,12 @@ function Main({
       getSurveys(organizationName);
     }
   }, [surveys, getSurveys, organizationName]);
+
+  useEffect(() => {
+    if (organizationName && !organization) {
+      getOrganization(organizationName);
+    }
+  }, [getOrganization, organization, organizationName]);
 
   useEffect(() => {
     if (!tags) {
@@ -149,10 +157,12 @@ const mapStateToProps = (state) => ({
   surveys: selectors.surveys.getSurveys(state),
   tags: selectors.tags.getTags(state),
   organizationName: selectors.user.getOrganizationName(state),
+  organization: selectors.organization.getOrganization(state),
 });
 
 const mapDispatchToProps = {
   getEvents: actions.events.getEvents,
+  getOrganization: actions.organization.getOrganization,
   getSurveys: actions.surveys.getSurveys,
   getTags: actions.tags.getTags,
   getUser: actions.user.getUser,
