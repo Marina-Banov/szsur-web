@@ -11,6 +11,7 @@ const actionMap = {
     organizationName: action.data.isAdmin,
   }),
   [actions.GET_USER_ERROR]: (state, _) => state,
+  [actions.RESET]: (state, _) => initialState,
 };
 
 export default (state = initialState, action) => {

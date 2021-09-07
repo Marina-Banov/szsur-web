@@ -74,6 +74,7 @@ const actionMap = {
     ...state,
     isLoading: false,
   }),
+  [actions.RESET]: (state, _) => initialState,
 };
 
 export default (state = initialState, action) => {

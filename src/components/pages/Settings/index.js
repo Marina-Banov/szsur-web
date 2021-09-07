@@ -88,7 +88,7 @@ function Settings({
           <CardHeader>{t("organization.social_media")}</CardHeader>
           <CardBody>
             {Object.keys(data.contacts).map((c) => (
-              <InputGroup className="my-2">
+              <InputGroup key={c} className="my-2">
                 <InputGroupAddon addonType="prepend">
                   <InputGroupText>
                     <i className={`fa ${contactIcons[c]}`} />

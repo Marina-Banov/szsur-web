@@ -9,4 +9,8 @@ const getUser = (id) =>
     actions.GET_USER_ERROR,
   ]);
 
-export default { getUser };
+const logout = () => ({
+  type: actions.RESET,
+});
+
+export default { getUser, logout };

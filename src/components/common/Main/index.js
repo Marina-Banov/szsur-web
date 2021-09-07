@@ -41,10 +41,10 @@ function Main({
   const [isMobile, setIsMobile] = useState(window.innerWidth <= MOBILE_SIZE);
 
   useEffect(() => {
-    if (!organizationName) {
+    if (!organizationName && firebase.auth.currentUser) {
       getUser(firebase.auth.currentUser.uid);
     }
-  }, [firebase.auth.currentUser.uid, getUser, organizationName]);
+  }, [firebase.auth.currentUser, getUser, organizationName]);
 
   useEffect(() => {
     if (organizationName && !events) {

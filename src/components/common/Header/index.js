@@ -10,12 +10,14 @@ import {
   Button,
 } from "reactstrap";
 import { matchPath } from "react-router-dom";
+import { connect } from "react-redux";
 
 import { useFirebase } from "appFirebase";
 import appRoutes from "appRoutes";
 import { Avatar, PageLoader } from "components/common";
+import { actions } from "store";
 
-export default function Header({ toggleSidebar, isSidebarCollapsed }) {
+function Header({ toggleSidebar, isSidebarCollapsed, logout }) {
   const firebase = useFirebase();
 
   function getPageTitle() {
@@ -56,7 +58,12 @@ export default function Header({ toggleSidebar, isSidebarCollapsed }) {
                 />
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem onClick={() => firebase.logOut()}>
+                <DropdownItem
+                  onClick={() => {
+                    firebase.logOut();
+                    logout();
+                  }}
+                >
                   Odjava
                 </DropdownItem>
               </DropdownMenu>
@@ -94,3 +101,11 @@ function ToggleSidebarButton({ isSidebarCollapsed, toggleSidebar }) {
     </Button>
   );
 }
+
+const mapStateToProps = (_) => ({});
+
+const mapDispatchToProps = {
+  logout: actions.user.logout,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

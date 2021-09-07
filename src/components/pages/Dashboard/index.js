@@ -1,8 +1,11 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Row, Col } from "reactstrap";
+import { connect } from "react-redux";
 
-export default function Dashboard() {
+import { selectors } from "store";
+
+function Dashboard({ organization }) {
   const { t } = useTranslation();
 
   return (
@@ -10,7 +13,7 @@ export default function Dashboard() {
       <Row>
         <Col md={6}>
           <div className="home-hero" style={{ padding: "50px 0 70px" }}>
-            <h1>{t("sztfr")}</h1>
+            <h1>{organization?.name}</h1>
             <p className="text-muted">
               {t("home_p1")}
               <br />
@@ -22,3 +25,11 @@ export default function Dashboard() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => ({
+  organization: selectors.organization.getOrganization(state),
+});
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
