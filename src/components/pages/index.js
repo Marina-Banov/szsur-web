@@ -9,5 +9,6 @@ export { default as NewEvent } from "./NewEvent";
 export { default as NewSurvey } from "./NewSurvey";
 export { default as NotFound } from "./NotFound";
 export { default as PublishSurvey } from "./PublishSurvey";
+export { default as Settings } from "./Settings";
 export { default as TableEvents } from "./TableEvents";
 export { default as TableSurveys } from "./TableSurveys";

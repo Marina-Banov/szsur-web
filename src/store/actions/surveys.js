@@ -2,8 +2,8 @@ import { actions, paths } from "../../constants";
 import api from "api";
 import { buildURLFromParams } from "utils";
 
-const getSurveys = (organization) =>
-  api.get(buildURLFromParams(paths.SURVEYS_QUERY, organization), [
+const getSurveys = (organizationName) =>
+  api.get(buildURLFromParams(paths.SURVEYS_QUERY, organizationName), [
     actions.GET_SURVEYS_REQUEST,
     actions.GET_SURVEYS_SUCCESS,
     actions.GET_SURVEYS_ERROR,

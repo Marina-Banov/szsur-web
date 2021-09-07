@@ -29,7 +29,7 @@ function Main({
   getSurveys,
   tags,
   getTags,
-  organization,
+  organizationName,
   getUser,
 }) {
   const firebase = useFirebase();
@@ -39,22 +39,22 @@ function Main({
   const [isMobile, setIsMobile] = useState(window.innerWidth <= MOBILE_SIZE);
 
   useEffect(() => {
-    if (!organization) {
+    if (!organizationName) {
       getUser(firebase.auth.currentUser.uid);
     }
-  }, [firebase.auth.currentUser.uid, getUser, organization]);
+  }, [firebase.auth.currentUser.uid, getUser, organizationName]);
 
   useEffect(() => {
-    if (organization && !events) {
-      getEvents(organization);
+    if (organizationName && !events) {
+      getEvents(organizationName);
     }
-  }, [events, getEvents, organization]);
+  }, [events, getEvents, organizationName]);
 
   useEffect(() => {
-    if (organization && !surveys) {
-      getSurveys(organization);
+    if (organizationName && !surveys) {
+      getSurveys(organizationName);
     }
-  }, [surveys, getSurveys, organization]);
+  }, [surveys, getSurveys, organizationName]);
 
   useEffect(() => {
     if (!tags) {
@@ -148,7 +148,7 @@ const mapStateToProps = (state) => ({
   events: selectors.events.getEvents(state),
   surveys: selectors.surveys.getSurveys(state),
   tags: selectors.tags.getTags(state),
-  organization: selectors.user.getOrganization(state),
+  organizationName: selectors.user.getOrganizationName(state),
 });
 
 const mapDispatchToProps = {

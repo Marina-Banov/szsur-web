@@ -1,14 +1,14 @@
 import { actions } from "../../constants";
 
 const initialState = {
-  organization: null,
+  organizationName: null,
 };
 
 const actionMap = {
   [actions.GET_USER_REQUEST]: (state, _) => state,
   [actions.GET_USER_SUCCESS]: (state, action) => ({
     ...state,
-    organization: action.data.isAdmin,
+    organizationName: action.data.isAdmin,
   }),
   [actions.GET_USER_ERROR]: (state, _) => state,
 };
