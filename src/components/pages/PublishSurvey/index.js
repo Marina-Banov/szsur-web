@@ -7,13 +7,17 @@ import {
   CardBody,
   CardHeader,
   Col,
+  DropdownMenu,
+  DropdownToggle,
   FormGroup,
   Input,
   Label,
   Row,
+  UncontrolledDropdown,
 } from "reactstrap";
 import { useTranslation } from "react-i18next";
 import { Camera } from "react-feather";
+import EmojiPicker from "emoji-picker-react";
 
 import { actions, selectors } from "store";
 import { ExportButton } from "components/common";
@@ -94,6 +98,20 @@ function PublishSurvey({ surveys, loading, updateSurvey }) {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
+              <div className="emoji-holder">
+                <UncontrolledDropdown>
+                  <DropdownToggle>
+                    <i className="fa fa-smile-o" />
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    <EmojiPicker
+                      onEmojiClick={(e, { emoji }) =>
+                        setDescription((d) => d.concat(emoji))
+                      }
+                    />
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              </div>
             </FormGroup>
           </CardBody>
         </Card>

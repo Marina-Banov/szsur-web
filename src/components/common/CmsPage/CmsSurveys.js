@@ -1,7 +1,18 @@
 import React from "react";
-import { CardBody, FormGroup, Label, Input, Button, Card } from "reactstrap";
+import {
+  CardBody,
+  FormGroup,
+  Label,
+  Input,
+  Button,
+  Card,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+} from "reactstrap";
 import { Divider } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
+import EmojiPicker from "emoji-picker-react";
 
 import { SurveyFormFields as FormFields } from "models";
 import { common } from "../../../constants";
@@ -65,6 +76,23 @@ export default function CmsSurveys({
             value={form.description}
             invalid={errors.includes(FormFields.description)}
           />
+          <div className="emoji-holder">
+            <UncontrolledDropdown>
+              <DropdownToggle>
+                <i className="fa fa-smile-o" />
+              </DropdownToggle>
+              <DropdownMenu>
+                <EmojiPicker
+                  onEmojiClick={(e, { emoji }) =>
+                    setFormField(
+                      FormFields.description,
+                      form.description.concat(emoji)
+                    )
+                  }
+                />
+              </DropdownMenu>
+            </UncontrolledDropdown>
+          </div>
         </FormGroup>
 
         {!form.published &&

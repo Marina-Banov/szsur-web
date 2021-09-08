@@ -9,6 +9,8 @@ import {
   CardBody,
   CardHeader,
   Col,
+  DropdownMenu,
+  DropdownToggle,
   FormGroup,
   Input,
   InputGroup,
@@ -16,7 +18,9 @@ import {
   InputGroupText,
   Label,
   Row,
+  UncontrolledDropdown,
 } from "reactstrap";
+import EmojiPicker from "emoji-picker-react";
 
 import {
   OrganizationForm,
@@ -80,6 +84,23 @@ function Settings({
                 value={data.description}
                 invalid={errors.fields.includes(FormFields.description)}
               />
+              <div className="emoji-holder">
+                <UncontrolledDropdown>
+                  <DropdownToggle>
+                    <i className="fa fa-smile-o" />
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    <EmojiPicker
+                      onEmojiClick={(e, { emoji }) =>
+                        setFormField(
+                          FormFields.description,
+                          data.description.concat(emoji)
+                        )
+                      }
+                    />
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              </div>
             </FormGroup>
           </CardBody>
         </Card>

@@ -1,7 +1,19 @@
 import React, { useEffect } from "react";
 import { usePlacesWidget } from "react-google-autocomplete";
-import { CardBody, FormGroup, Label, Input, Row, Col, Card } from "reactstrap";
+import {
+  CardBody,
+  FormGroup,
+  Label,
+  Input,
+  Row,
+  Col,
+  Card,
+  DropdownToggle,
+  DropdownMenu,
+  UncontrolledDropdown,
+} from "reactstrap";
 import { useTranslation } from "react-i18next";
+import EmojiPicker from "emoji-picker-react";
 
 import { EventFormFields as FormFields } from "models";
 import { DatePicker, TimePicker } from "components/common";
@@ -219,6 +231,23 @@ export default function CmsEvents({
             value={form.description}
             invalid={errors.includes(FormFields.description)}
           />
+          <div className="emoji-holder">
+            <UncontrolledDropdown>
+              <DropdownToggle>
+                <i className="fa fa-smile-o" />
+              </DropdownToggle>
+              <DropdownMenu>
+                <EmojiPicker
+                  onEmojiClick={(e, { emoji }) =>
+                    setFormField(
+                      FormFields.description,
+                      form.description.concat(emoji)
+                    )
+                  }
+                />
+              </DropdownMenu>
+            </UncontrolledDropdown>
+          </div>
         </FormGroup>
       </CardBody>
     </Card>

@@ -47,3 +47,11 @@ button.icon {
 .table-wrapper {
   overflow-x: auto;
 }
+
+.emoji-holder {
+  right: 0;
+  bottom: 0;
+  position: absolute;
+
+  .dropdown-menu { padding: 0 !important }
+}
