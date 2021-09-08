@@ -1,8 +1,13 @@
 import { createSelector } from "reselect";
 
-const getOrganization = createSelector(
-  (state) => state.user.organization,
+const getOrganizationName = createSelector(
+  (state) => state.user.organizationName,
   (user) => user
 );
 
-export default { getOrganization };
+const getIsLoading = createSelector(
+  (state) => state.user.isLoading,
+  (isLoading) => isLoading
+);
+
+export default { getOrganizationName, getIsLoading };

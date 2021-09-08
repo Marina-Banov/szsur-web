@@ -8,6 +8,10 @@
     "email_for_confirmation": "Molimo upiši svoju e-mail adresu",
     "invalid_verification_link": "Nešto nije u redu s poveznicom. Možeš ponovno zatražiti verifikacijski e-mail."
   },
+  "logout": "Odjava",
+  "403": "Nemate pristup ovoj stranici",
+  "404": "Stranica kojoj ste pokušali pristupiti ne postoji",
+  "go_home": "Povratak na početnu stranicu",
   "cancel": "Odustani",
   "error_occurred": "Došlo je do pogreške",
   "try_again": "Pokušaj ponovno",
@@ -67,6 +71,10 @@
     "publish_intro": "Ovdje možeš pogledati kako su korisnici mobilne aplikacije SZSUR odgovorili na anketu \"{{title}}\". Rezultati su dostupni u Excel formatu i tamo ih možeš obraditi prema vlastitim potrebama. Svoje zaključke i statistiku možeš s drugim studentima podijeliti u obliku teksta i fotografija (npr. grafikona).",
     "mark_as_required": "Označi kao obavezno"
   },
+  "organization": {
+    "name": "Ime zbora ili udruge",
+    "social_media": "Kontakti i društvene mreže"
+  },
   "validation": {
     "required": "Molimo ispunite obavezna polja"
   },
@@ -76,7 +84,6 @@
   "publish": "Objavi",
   "delete": "Obriši",
   "save_changes": "Spremi promjene",
-  "sztfr": "Studentski zbor Tehničkog fakulteta",
-  "home_p1": "Ovo je mjesto za upravljanje sadržajem na mobilnoj aplikaciji SZTFR. Rezervirano za članove SZ-a.",
-  "home_p2": "Dodaj, uredi ili obriši događaje koje organizira Studentski zbor ili postavi i obradi ankete svim studentima Tehničkog fakulteta."
+  "home_p1": "Ovo je mjesto za upravljanje sadržajem na mobilnoj aplikaciji SZSUR. Rezervirano za administratore tvoje udruge ili zbora.",
+  "home_p2": "Dodaj, uredi ili obriši događaje koje organizira tvoja udruga ili zbor ili postavi i obradi ankete svim studentima tvog fakulteta ili sveučilišta."
 }

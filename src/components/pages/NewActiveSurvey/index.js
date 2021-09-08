@@ -149,7 +149,7 @@ function NewActiveSurvey({ addSurvey, loading, organisation }) {
 
 const mapStateToProps = (state) => ({
   loading: selectors.surveys.getIsLoading(state),
-  organisation: selectors.user.getOrganization(state),
+  organisation: selectors.user.getOrganizationName(state),
 });
 
 const mapDispatchToProps = {

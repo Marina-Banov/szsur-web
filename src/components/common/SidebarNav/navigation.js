@@ -16,7 +16,13 @@ const navigation = {
       url: "/surveys",
     },
   ],
-  bottom: [],
+  bottom: [
+    {
+      name: "Profil udruge",
+      icon: "Settings",
+      url: "/settings",
+    },
+  ],
 };
 
 export default navigation;

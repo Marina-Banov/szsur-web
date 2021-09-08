@@ -1,12 +1,14 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import navigation from "./navigation";
 import { PageAlertContext } from "components/common";
-import Logo from "assets/sztfr-logo.svg";
+import Logo from "assets/logo.svg";
 import NavSingleItem from "./NavSingleItem";
 import NavDropdownItem from "./NavDropdownItem";
+import { selectors } from "store";
 
-export default function SidebarNav({ toggleSidebar, isSidebarCollapsed }) {
+function SidebarNav({ toggleSidebar, isSidebarCollapsed, organizationName }) {
   const navItems = (items) => {
     return items.map((item, index) => itemType(item, index));
   };
@@ -33,7 +35,7 @@ export default function SidebarNav({ toggleSidebar, isSidebarCollapsed }) {
       : "Collapse Sidebar Navigation";
 
     return (
-      <div className="site-logo-bar">
+      <div className="site-logo-bar mb-3">
         <button
           onClick={toggleSidebar}
           className="navbar-brand"
@@ -53,7 +55,7 @@ export default function SidebarNav({ toggleSidebar, isSidebarCollapsed }) {
         return (
           <div>
             <div className={`app-sidebar ${hasPageAlertClass}`}>
-              <NavBrand logo={Logo} logoText="SZTFR" />
+              <NavBrand logo={Logo} logoText={organizationName} />
               <nav>
                 <ul id="main-menu">
                   {navItems(navigation.top)}
@@ -71,3 +73,11 @@ export default function SidebarNav({ toggleSidebar, isSidebarCollapsed }) {
     </PageAlertContext.Consumer>
   );
 }
+
+const mapStateToProps = (state) => ({
+  organizationName: selectors.user.getOrganizationName(state),
+});
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SidebarNav);

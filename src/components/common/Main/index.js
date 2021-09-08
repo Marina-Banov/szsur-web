@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Switch, Route, Link, useLocation, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { CircularProgress } from "@material-ui/core";
 
 import {
   Header,
@@ -10,7 +11,7 @@ import {
   PageLoaderProvider,
   PageAlertProvider,
 } from "components/common";
-import { NotFound } from "components/pages";
+import { Forbidden, NotFound } from "components/pages";
 import {
   handleClickAccessibility,
   handleKeyAccessibility,
@@ -30,7 +31,10 @@ function Main({
   tags,
   getTags,
   organization,
+  getOrganization,
+  organizationName,
   getUser,
+  loading,
 }) {
   const firebase = useFirebase();
   const location = useLocation();
@@ -39,28 +43,34 @@ function Main({
   const [isMobile, setIsMobile] = useState(window.innerWidth <= MOBILE_SIZE);
 
   useEffect(() => {
-    if (!organization) {
+    if (!organizationName && firebase.auth.currentUser) {
       getUser(firebase.auth.currentUser.uid);
     }
-  }, [firebase.auth.currentUser.uid, getUser, organization]);
+  }, [firebase.auth.currentUser, getUser, organizationName]);
 
   useEffect(() => {
-    if (organization && !events) {
-      getEvents(organization);
+    if (organizationName && !events) {
+      getEvents(organizationName);
     }
-  }, [events, getEvents, organization]);
+  }, [events, getEvents, organizationName]);
 
   useEffect(() => {
-    if (organization && !surveys) {
-      getSurveys(organization);
+    if (organizationName && !surveys) {
+      getSurveys(organizationName);
     }
-  }, [surveys, getSurveys, organization]);
+  }, [surveys, getSurveys, organizationName]);
 
   useEffect(() => {
-    if (!tags) {
+    if (organizationName && !organization) {
+      getOrganization(organizationName);
+    }
+  }, [getOrganization, organization, organizationName]);
+
+  useEffect(() => {
+    if (organizationName && !tags) {
       getTags();
     }
-  }, [getTags, tags]);
+  }, [getTags, organizationName, tags]);
 
   function handleResize() {
     if (window.innerWidth <= MOBILE_SIZE) {
@@ -97,7 +107,13 @@ function Main({
     };
   }, []);
 
-  return (
+  return loading ? (
+    <div className="flex_center_center login-page">
+      <CircularProgress size="12em" />
+    </div>
+  ) : !organizationName ? (
+    <Forbidden />
+  ) : (
     <PageLoaderProvider>
       <PageAlertProvider>
         <div className={`app ${sidebarCollapsed ? "side-menu-collapsed" : ""}`}>
@@ -148,11 +164,14 @@ const mapStateToProps = (state) => ({
   events: selectors.events.getEvents(state),
   surveys: selectors.surveys.getSurveys(state),
   tags: selectors.tags.getTags(state),
-  organization: selectors.user.getOrganization(state),
+  organizationName: selectors.user.getOrganizationName(state),
+  organization: selectors.organization.getOrganization(state),
+  loading: selectors.user.getIsLoading(state),
 });
 
 const mapDispatchToProps = {
   getEvents: actions.events.getEvents,
+  getOrganization: actions.organization.getOrganization,
   getSurveys: actions.surveys.getSurveys,
   getTags: actions.tags.getTags,
   getUser: actions.user.getUser,

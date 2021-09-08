@@ -7,6 +7,7 @@ import {
   NewSurvey,
   NotFound,
   PublishSurvey,
+  Settings,
   TableEvents,
   TableSurveys,
 } from "components/pages";
@@ -66,6 +67,11 @@ const mainRoutes = [
     name: "Objavi rezultate ankete",
     path: "/surveys/publish/:id",
     component: PublishSurvey,
+  },
+  {
+    name: "Profil udruge",
+    path: "/settings",
+    component: Settings,
   },
 ];
 

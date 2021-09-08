@@ -6,30 +6,32 @@ const initialState = {
 };
 
 const actionMap = {
-  [actions.GET_TAGS_REQUEST]: (state, _) => ({
+  [actions.GET_ORGANIZATION_REQUEST]: (state, _) => ({
     ...state,
     isLoading: true,
   }),
-  [actions.GET_TAGS_SUCCESS]: (state, action) => ({
+  [actions.GET_ORGANIZATION_SUCCESS]: (state, action) => ({
     ...state,
-    data: action.data.values,
+    data: action.data,
     isLoading: false,
   }),
-  [actions.GET_TAGS_ERROR]: (state, _) => ({
+  [actions.GET_ORGANIZATION_ERROR]: (state, _) => ({
     ...state,
-    data: [],
+    data: {},
     isLoading: false,
   }),
-  [actions.UPDATE_TAGS_REQUEST]: (state, _) => ({
+  [actions.UPDATE_ORGANIZATION_REQUEST]: (state, _) => ({
     ...state,
     isLoading: true,
   }),
-  [actions.UPDATE_TAGS_SUCCESS]: (state, action) => ({
-    ...state,
-    data: action.data.values,
-    isLoading: false,
-  }),
-  [actions.UPDATE_TAGS_ERROR]: (state, _) => ({
+  [actions.UPDATE_ORGANIZATION_SUCCESS]: (state, action) => {
+    return {
+      ...state,
+      data: action.data,
+      isLoading: false,
+    };
+  },
+  [actions.UPDATE_ORGANIZATION_ERROR]: (state, _) => ({
     ...state,
     isLoading: false,
   }),

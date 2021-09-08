@@ -10,6 +10,11 @@ export {
   EventFormValidation,
 } from "./EventForm";
 export {
+  default as OrganizationForm,
+  OrganizationFormFields,
+  OrganizationFormValidation,
+} from "./OrganizationForm";
+export {
   default as SurveyForm,
   SurveyFormFields,
   SurveyFormValidation,
