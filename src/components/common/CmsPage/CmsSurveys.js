@@ -58,6 +58,7 @@ export default function CmsSurveys({
           <Label for={FormFields.description}>{t("description")}</Label>
           <Input
             type="textarea"
+            rows={8}
             name={FormFields.description}
             id={FormFields.description}
             onChange={handleInputChange}

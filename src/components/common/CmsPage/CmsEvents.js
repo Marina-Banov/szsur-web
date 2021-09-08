@@ -213,6 +213,7 @@ export default function CmsEvents({
           <Input
             id={FormFields.description}
             type="textarea"
+            rows={8}
             name={FormFields.description}
             onChange={handleInputChange}
             value={form.description}

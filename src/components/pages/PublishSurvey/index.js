@@ -88,6 +88,7 @@ function PublishSurvey({ surveys, loading, updateSurvey }) {
               <Label for="description">{t("description")}</Label>
               <Input
                 type="textarea"
+                rows={8}
                 name="description"
                 id="description"
                 value={description}
