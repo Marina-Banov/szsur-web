@@ -33,11 +33,12 @@ function Settings({
   updateOrganization,
 }) {
   const { t } = useTranslation();
-  const { data, handleInputChange, handleSubmit, errors } = useForm(
-    new OrganizationForm({ ...organization }),
-    OrganizationFormValidation,
-    onSubmit
-  );
+  const { data, handleInputChange, handleSubmit, setFormField, errors } =
+    useForm(
+      new OrganizationForm({ ...organization }),
+      OrganizationFormValidation,
+      onSubmit
+    );
   const contactIcons = {
     web: "fa-globe",
     mail: "fa-envelope",
@@ -100,7 +101,12 @@ function Settings({
                   aria-label={c}
                   name={FormFields[c]}
                   id={FormFields[c]}
-                  onChange={handleInputChange}
+                  onChange={(e) =>
+                    setFormField(FormFields.contacts, {
+                      ...data.contacts,
+                      [c]: e.target.value,
+                    })
+                  }
                   value={data.contacts[c]}
                 />
               </InputGroup>

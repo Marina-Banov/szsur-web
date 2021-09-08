@@ -29,14 +29,14 @@ export default class SurveyForm {
   }
 
   static async finalTransformation(data) {
+    delete data.id;
     data.questions.forEach((q, i) => (q.order = (i + 1).toString()));
-    if (data.image.base64) {
-      return;
+    if (data.image instanceof File) {
+      data.image = {
+        name: paths.SURVEYS_STORAGE + data.image.name,
+        base64: await toBase64(data.image),
+      };
     }
-    data.image = {
-      name: paths.SURVEYS_STORAGE + data.image.name,
-      base64: await toBase64(data.image),
-    };
   }
 }
 

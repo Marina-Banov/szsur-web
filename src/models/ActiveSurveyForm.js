@@ -29,10 +29,13 @@ export default class ActiveSurveyForm {
   }
 
   static async finalTransformation(data) {
-    data.image = {
-      name: paths.SURVEYS_STORAGE + data.image.name,
-      base64: await toBase64(data.image),
-    };
+    delete data.id;
+    if (data.image instanceof File) {
+      data.image = {
+        name: paths.SURVEYS_STORAGE + data.image.name,
+        base64: await toBase64(data.image),
+      };
+    }
   }
 }
 

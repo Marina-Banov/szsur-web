@@ -1,6 +1,7 @@
 export const OrganizationFormFields = {
   name: "name",
   description: "description",
+  contacts: "contacts",
   mail: "contacts.mail",
   web: "contacts.web",
   facebook: "contacts.facebook",

@@ -3,7 +3,6 @@ export {
   ActiveSurveyFormFields,
   ActiveSurveyFormValidation,
 } from "./ActiveSurveyForm";
-export { default as Event } from "./Event";
 export {
   default as EventForm,
   EventFormFields,

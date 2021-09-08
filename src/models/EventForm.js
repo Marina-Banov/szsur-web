@@ -1,6 +1,7 @@
 import moment from "moment";
 
-import { combineDateTime, getISOTime, validDateRange } from "utils";
+import { combineDateTime, getISOTime, toBase64, validDateRange } from "utils";
+import { paths } from "../constants";
 
 export const EventFormFields = {
   title: "title",
@@ -55,6 +56,29 @@ export default class EventForm {
       },
       event
     );
+  }
+
+  static async finalTransformation(data) {
+    delete data.id;
+
+    data.location = data.location.online
+      ? data.location.valueOnline
+      : data.location.valueOnsite.place_id;
+
+    data.startTime = combineDateTime(
+      data.startDate,
+      getISOTime(data.startTime)
+    );
+    delete data.startDate;
+    data.endTime = combineDateTime(data.endDate, getISOTime(data.endTime));
+    delete data.endDate;
+
+    if (data.image instanceof File) {
+      data.image = {
+        name: paths.EVENTS_STORAGE + data.image.name,
+        base64: await toBase64(data.image),
+      };
+    }
   }
 }
 

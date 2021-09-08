@@ -3,10 +3,9 @@ import { useHistory, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { CmsPage, CmsEvents } from "components/common";
-import { toBase64, useForm } from "utils";
-import { Event, EventForm, EventFormFields, EventFormValidation } from "models";
+import { useForm } from "utils";
+import { EventForm, EventFormFields, EventFormValidation } from "models";
 import { actions, selectors } from "store";
-import { paths } from "../../../constants";
 
 function EditEvent({ events, loading, updateEvent }) {
   const history = useHistory();
@@ -16,12 +15,8 @@ function EditEvent({ events, loading, updateEvent }) {
     useForm(new EventForm({ ...event }), EventFormValidation, onSubmit);
 
   async function onSubmit() {
-    let body = new Event(data);
-    body.image = {
-      name: paths.EVENTS_STORAGE + data.image.name,
-      base64: await toBase64(body.image),
-    };
-    updateEvent(event.id, body);
+    await EventForm.finalTransformation(data);
+    updateEvent(event.id, data);
     history.push("/events");
   }
 
