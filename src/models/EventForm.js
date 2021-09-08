@@ -113,7 +113,7 @@ export const EventFormValidation = {
       if (form.location.online === false) {
         return true;
       }
-      return form.location.valueOnline !== "";
+      return !!form.location.valueOnline;
     },
   },
   "location.valueOnsite": {
@@ -124,7 +124,9 @@ export const EventFormValidation = {
       if (form.location.online === true) {
         return true;
       }
-      return form.location.valueOnsite.hasOwnProperty("place_id");
+      return form.location.valueOnsite
+        ? !!form.location.valueOnsite.place_id
+        : false;
     },
   },
 };
