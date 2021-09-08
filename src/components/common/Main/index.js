@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Switch, Route, Link, useLocation, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { CircularProgress } from "@material-ui/core";
 
 import {
   Header,
@@ -33,6 +34,7 @@ function Main({
   getOrganization,
   organizationName,
   getUser,
+  loading,
 }) {
   const firebase = useFirebase();
   const location = useLocation();
@@ -105,7 +107,13 @@ function Main({
     };
   }, []);
 
-  return (
+  return loading ? (
+    <div className="flex_center_center login-page">
+      <CircularProgress size="12em" />
+    </div>
+  ) : !organizationName ? (
+    <Forbidden />
+  ) : (
     <PageLoaderProvider>
       <PageAlertProvider>
         <div className={`app ${sidebarCollapsed ? "side-menu-collapsed" : ""}`}>
@@ -127,7 +135,7 @@ function Main({
                     <Route
                       path={page.path}
                       exact
-                      component={organizationName ? page.component : Forbidden}
+                      component={page.component}
                       key={key}
                     />
                   ))}
@@ -158,6 +166,7 @@ const mapStateToProps = (state) => ({
   tags: selectors.tags.getTags(state),
   organizationName: selectors.user.getOrganizationName(state),
   organization: selectors.organization.getOrganization(state),
+  loading: selectors.user.getIsLoading(state),
 });
 
 const mapDispatchToProps = {

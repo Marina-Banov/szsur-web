@@ -5,4 +5,9 @@ const getOrganizationName = createSelector(
   (user) => user
 );
 
-export default { getOrganizationName };
+const getIsLoading = createSelector(
+  (state) => state.user.isLoading,
+  (isLoading) => isLoading
+);
+
+export default { getOrganizationName, getIsLoading };

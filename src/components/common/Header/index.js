@@ -11,6 +11,7 @@ import {
 } from "reactstrap";
 import { matchPath } from "react-router-dom";
 import { connect } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { useFirebase } from "appFirebase";
 import appRoutes from "appRoutes";
@@ -19,6 +20,7 @@ import { actions } from "store";
 
 function Header({ toggleSidebar, isSidebarCollapsed, logout }) {
   const firebase = useFirebase();
+  const { t } = useTranslation();
 
   function getPageTitle() {
     let name;
@@ -64,7 +66,7 @@ function Header({ toggleSidebar, isSidebarCollapsed, logout }) {
                     logout();
                   }}
                 >
-                  Odjava
+                  {t("logout")}
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
